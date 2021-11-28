@@ -74,7 +74,8 @@ function clean_generated_config_files(){
       $CONFIG_PATH/vms.list \
       $CONFIG_PATH/apps.list \
       config/generated/post-vm-creation/inventory \
-      config/generated/post-vm-creation/ssh-config
+      config/generated/post-vm-creation/ssh-config \
+      config/generated/post-vm-creation/.vault_password 
 }
 
 function teardown(){

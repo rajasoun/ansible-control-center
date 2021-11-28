@@ -6,3 +6,6 @@ user-mgmt-playbook.yml
 
 #.password
 .*_password
+
+# ssh-config
+ssh-config
