@@ -1,0 +1,13 @@
+---
+- name: Linux Reboot
+  hosts: control-center
+  gather_facts: no
+  become: true
+  become_method: sudo
+
+  tasks:
+      - name: Reboot the machine (Wait for 5 min)
+        reboot:
+            reboot_command: launchctl reboot userspace
+            boot_time_command: uptime | cut -d ' ' -f 5
+            reboot_timeout: 300

@@ -1,0 +1,35 @@
+- hosts: observability
+  become: true
+  become_method: sudo
+
+  vars:
+      docker_edition: 'ce'
+      docker_install_compose: true
+      docker_compose_version: '1.29.2'
+      docker_users: ['ubuntu']
+
+      certificates:
+          - ssl_certificate.crt
+          - ssl_certificate_key.key
+
+  tasks:
+      - name: Git checkout
+        ansible.builtin.git:
+            repo: 'https://github.com/rajasoun/observability-dashboard'
+            dest: observability-dashboard
+            update: yes
+
+  post_tasks:
+      - name: Copy  SSL certificates to Host
+        tags: ssl_certs
+        ansible.builtin.copy:
+            src: 'certs/{{ item }}'
+            dest: '/home/{{ ansible_user }}/observability-dashboard/config/certs/{{ item }}'
+            owner: root
+            group: root
+            mode: 'u=rw,g=r,o=' #'0440'
+        with_items:
+            - '{{ certificates }}'
+
+  roles:
+      - geerlingguy.docker

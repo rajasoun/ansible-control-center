@@ -1,0 +1,15 @@
+---
+- hosts: control-center
+
+  vars:
+      git_repos:
+          - name: 'ansible-control-center'
+            url: 'https://github.com/rajasoun/ansible-control-center'
+
+  tasks:
+      - name: Git checkout
+        ansible.builtin.git:
+            repo: '{{ item.url}}'
+            dest: '{{ item.name }}'
+            update: yes
+        with_items: '{{ git_repos }}'

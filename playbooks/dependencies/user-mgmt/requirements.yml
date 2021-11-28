@@ -1,0 +1,12 @@
+# from Enterprise GitHub
+- src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-users.git
+  version: master
+
+- src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-setup.git
+  version: master
+
+- src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-bom_management.git
+  version: master
+
+- src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-duo_install.git
+  version: master

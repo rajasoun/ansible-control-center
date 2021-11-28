@@ -1,0 +1,13 @@
+---
+- name: Configure control-center
+  hosts: control-center
+
+  vars:
+      USER_HOME: '/home/ubuntu'
+
+  tasks:
+      - name: Copy Generated monit playbbok to Host
+        tags: monit_playbbok
+        ansible.builtin.copy:
+            src: '../monit.yml'
+            dest: '{{ USER_HOME }}/ansible-control-center/playbooks'

@@ -1,0 +1,3 @@
+---
+- import_playbook: git-checkout.yml
+- import_playbook: etc.yml

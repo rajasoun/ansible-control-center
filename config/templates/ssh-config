@@ -1,0 +1,10 @@
+Host _GATEWAY_IP_
+    User ansible
+    Port 22
+    IdentityFile /home/ansible/.ssh/id_rsa
+
+Host k3s-* control-* mmonit observability edge-router
+    User ansible
+    Port 22
+    IdentityFile /home/ansible/.ssh/id_rsa
+

@@ -1,0 +1,20 @@
+---
+- hosts: control-center
+
+  vars:
+      pip_package: python3-pip
+      pip_executable: pip3
+      pip_install_packages:
+          - name: awscli
+          - name: python-openstackclient
+
+  pre_tasks:
+      - name: Install Pip3
+        become: true
+        become_method: sudo
+        apt: name={{item}} state=latest update_cache=yes
+        with_items:
+            - python3-pip
+
+  roles:
+      - geerlingguy.pip

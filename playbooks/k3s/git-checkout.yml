@@ -1,0 +1,22 @@
+---
+- hosts: control-center
+
+  vars:
+      USER_HOME: '/home/ubuntu'
+      git_repos:
+          - name: 'k3s-ansible'
+            url: 'https://github.com/k3s-io/k3s-ansible'
+
+  tasks:
+      - name: Git checkout
+        ansible.builtin.git:
+            repo: '{{ item.url}}'
+            dest: '{{ item.name }}'
+            update: yes
+        with_items: '{{ git_repos }}'
+
+      - name: Copy k3s Roles to ~/.ansible
+        copy:
+            src: '~/k3s-ansible/roles/{{ item }}'
+            dest: '~/.ansible/roles/'
+        with_items: ['prereq', 'download', 'k3s', 'reset']

@@ -1,0 +1,14 @@
+---
+- name: Configure control-center
+  hosts: control-center
+
+  vars:
+      LOCAL_CONFIG: '../../config/generated/'
+      USER_HOME: '/home/ubuntu'
+
+  tasks:
+      - name: Copy Inventory to Host
+        tags: inventory
+        ansible.builtin.copy:
+            src: '{{ LOCAL_CONFIG }}/post-vm-creation/inventory'
+            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/post-vm-creation'

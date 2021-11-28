@@ -1,0 +1,28 @@
+---
+- hosts: control-center
+  become: true
+  become_method: sudo
+
+  # pre_tasks is a task which Ansible executes before executing any tasks mentioned in .yml file.
+  pre_tasks:
+      - name: check apt last update
+        stat: path=/var/cache/apt
+        register: apt_cache_stat
+      - name: update apt if needed # Update if not modified since the last 12 hours
+        apt: update_cache=yes
+        when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
+      - name: Add Ansible repository from PPA 
+        ansible.builtin.apt_repository:
+          repo: ppa:ansible/ansible
+      - name: Set discovered Ansible Python interpreter.
+        set_fact:
+            ansible_python_interpreter: '{{ ansible_facts.python.executable }}'
+        when: ansible_python_interpreter is not defined
+
+  tasks:
+      - name: Install APT Packages
+        apt:
+            pkg:
+                - python-netaddr
+                - software-properties-common
+                - ansible

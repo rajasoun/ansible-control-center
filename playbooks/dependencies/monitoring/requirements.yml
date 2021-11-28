@@ -1,0 +1,6 @@
+# from galaxy
+- src: rajasoun.ansible_role_monit
+- src: rajasoun.ansible_role_mmonit
+- src: cloudalchemy.node_exporter
+- src: geerlingguy.docker
+- src: geerlingguy.pip

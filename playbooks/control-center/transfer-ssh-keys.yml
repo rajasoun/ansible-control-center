@@ -1,0 +1,36 @@
+---
+- name: Configure control-center
+  hosts: control-center
+
+  vars:
+      LOCAL_CONFIG: '../../config/generated/'
+      USER_HOME: '/home/ubuntu'
+
+  pre_tasks:
+      - name: Create a directory if it does not exist
+        ansible.builtin.file:
+            path: '{{ item }}'
+            state: directory
+        with_items:
+            - '{{ USER_HOME }}/ansible-managed'
+  tasks:
+      - name: Copy SSH Private Key
+        tags: ssh_private_key
+        ansible.builtin.copy:
+            src: '{{ LOCAL_CONFIG }}/pre-vm-creation/id_rsa'
+            dest: '{{ USER_HOME }}/.ssh/id_rsa'
+            mode: 'u=rw,g=,o='
+
+      - name: Copy SSH Config to Host
+        tags: ssh_keys
+        ansible.builtin.copy:
+            src: '{{ LOCAL_CONFIG }}/post-vm-creation/ssh-config'
+            dest: '{{ USER_HOME }}/.ssh/config'
+            mode: 'u=rw,g=r,o=r'
+
+      - name: Copy Ansible Vault File
+        tags: vault_password
+        ansible.builtin.copy:
+            src: '{{ LOCAL_CONFIG }}/post-vm-creation/.vault_password'
+            dest: '{{ USER_HOME }}/ansible-managed/.vault_password'
+            mode: 'u=rw,g=r,o=r'

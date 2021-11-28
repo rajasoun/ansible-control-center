@@ -1,0 +1,17 @@
+# SSH Keys and config
+id_rsa
+id_rsa.pub
+
+ssh-config
+# cloud-init
+cloud-init.yaml
+# user-mgmt playbook
+user-mgmt-playbook.yml
+# vm 
+vms.list
+vms.sh
+
+apps.list
+
+#.password
+.*_password

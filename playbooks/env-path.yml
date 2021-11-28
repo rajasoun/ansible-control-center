@@ -1,0 +1,18 @@
+---
+- hosts: all,!localhost
+  become: true
+  become_method: sudo
+
+  vars:
+      os_environment:
+          - key: PIP_PACKAGES
+            value: '$HOME/.local/bin'
+
+  tasks:
+      - name: Set /etc/environment
+        lineinfile:
+            dest: '/etc/environment'
+            state: present
+            regexp: '^{{ item.key }}='
+            line: '{{ item.key }}={{ item.value}}'
+        with_items: '{{ os_environment }}'

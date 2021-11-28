@@ -1,0 +1,8 @@
+# ansile inventory
+inventory
+
+# user mgmt playbook
+user-mgmt-playbook.yml
+
+#.password
+.*_password

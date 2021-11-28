@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+function ansible_manager() {
+  action="$2"
+  case $action in
+  up)
+    echo "Configuring sandbox environment..."
+    echo "If this is your first time starting sandbox this might take a minute..."
+    configure_control_center
+    ;;
+  down)
+    echo "Stopping multipass sandbox containers..."
+    ;;
+  status)
+    echo "Querying VMs status (ansible ping)..."
+    #ansible_runner "ansible-playbook playbooks/ping.yml"
+    ansible_runner "ansible -m ping vms"
+    ;;
+  run)
+    ansible_runner "$@"
+    ;;
+  *)
+    cat <<-EOF
+sandbox commands:
+----------------
+  up                 -> configure all vms in sandbox environment
+  down               -> stop all vms in sandbox environment
+  status             -> displays status - ansible ping
+  run                -> Run Ansible Command
+EOF
+    ;;
+  esac
+}
+
+
+ 

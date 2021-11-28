@@ -1,0 +1,14 @@
+---
+- name: Configure k3s-worker
+  hosts: k3s-worker
+  become: true
+  become_method: sudo
+
+  tasks:
+      - name: Add Ansible inventory mappings to /etc/hosts
+        blockinfile:
+            path: /etc/hosts
+            block: |
+                {% for host in groups['master'] | difference(['localhost']) %}
+                {{ hostvars[host].ansible_ssh_host }} {{ host }}
+                {% endfor %}

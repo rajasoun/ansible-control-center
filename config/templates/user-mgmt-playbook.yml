@@ -1,0 +1,16 @@
+---
+- hosts: all,!localhost
+  become: true
+  become_method: sudo
+
+  vars:
+      users_group_add_list:
+          - name: deployer
+
+      users_add_list:
+          - name: ansible
+            unlimited_superuser: true
+            ssh_key: _SSH_KEY_
+
+  roles:
+      - role: ansible-users

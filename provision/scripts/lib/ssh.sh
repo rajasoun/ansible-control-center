@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+CONFIG_TEMPLATE_PATH="config/templates"
+CONFIG_PATH="config/generated"
+
+SSH_KEY_PATH="${CONFIG_PATH}/pre-vm-creation"
+SSH_KEY="id_rsa"
+SSH_USER="ansible"
+
+## Generate SSH Keys
+function generate_ssh_key() {
+    if [ -f "$SSH_KEY_PATH/${SSH_KEY}" ]; then
+        echo "Reusing Existing SSH Keys"
+        return 0
+    fi
+    echo "Generating SSH Keys..."
+    echo -e 'y\n' | ssh-keygen -q -t rsa -C \
+                            "$(id -un)@$DOMAIN" -N "" \
+                            -f "$SSH_KEY_PATH/${SSH_KEY}" 2>&1 > /dev/null 2>&1
+    # Fix Permission For Private Key
+    chmod 400 "$SSH_KEY_PATH"/"${SSH_KEY}"
+    echo "${GREEN}${SSH_KEY} & ${SSH_KEY}.pub keys Generation Done! ${NC}"
+}
+
+## Check SSH Private Key File Exists
+function check_ssh_private_key_exists() {
+    if [ ! -f "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}")" ];then 
+       echo "${BOLD}${RED} SSH Private Key File $SSH_KEY_PATH/${SSH_KEY}.pub Not Exist${NC}" 
+       return 1
+    fi 
+}
+
+## Generate SSH Public Key from Private Key File
+function generate_ssh_public_key_from_private_key(){
+    if [ check_ssh_private_key_exists ]; then
+        if [ -f "$(cat $SSH_KEY_PATH/${SSH_KEY})" ];then 
+            PUBLIC_KEY_FROM_PRIVATE_KEY="$(ssh-keygen -y -f $SSH_KEY_PATH/${SSH_KEY})"
+            echo $PUBLIC_KEY_FROM_PRIVATE_KEY > "$SSH_KEY_PATH/${SSH_KEY}.pub"
+            return 0
+        else
+            echo "${BOLD}${RED} SSH Private Key $SSH_KEY_PATH File Not Exist. Exiting... ${NC}" 
+            return 1
+        fi
+    fi 
+}
+
+## Check SSH Public Key File matches with Private Key File
+function check_ssh_public_private_key_pair(){
+    if [ check_ssh_private_key_exists ]; then
+        # If Public Key File Not Available. Generate From Private Key File
+        [ ! -f $SSH_KEY_PATH/${SSH_KEY}.pub ] || generate_ssh_public_key_from_private_key
+        DIFF=$(diff <(cut -d' ' -f 2 $SSH_KEY_PATH/${SSH_KEY}.pub) <(ssh-keygen -y -f $SSH_KEY_PATH/${SSH_KEY} | cut -d' ' -f 2) | wc -l)
+        if [ $DIFF -eq "0" ]; then
+            echo "${BOLD}${GREEN} SSH Public Private Key Pair Matches ${NC}"
+            return 0
+        else
+            echo "${BOLD}${RED} SSH Public Private Key Pair Does Not Matche ${NC}"
+            return 1
+        fi 
+    fi 
+}
+
+## Create cloud-init.yaml file from template with SSH public key
+function create_cloud_init_config_from_template() {
+    local CLOUD_INIT_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/cloud-init.yaml"
+    local CLOUD_INIT_CONFIG_FILE="${CONFIG_PATH}/cloud-init.yaml"
+
+    if [ -f "$CLOUD_INIT_CONFIG_FILE" ]; then
+        echo "$CLOUD_INIT_CONFIG_FILE exists"
+        echo "${ORANGE}Reusing Existing $CLOUD_INIT_CONFIG_FILE Config Files${NC}"
+        return 0
+    fi
+    echo "${BOLD}Generating $CLOUD_INIT_CONFIG_FILE Config Files...${NC}"
+    cp "$CLOUD_INIT_TEMPLATE_FILE" "$CLOUD_INIT_CONFIG_FILE"
+    file_replace_text "ssh-rsa.*$" "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}".pub)" "$CLOUD_INIT_CONFIG_FILE"
+    echo "${GREEN} $CLOUD_INIT_CONFIG_FILE Generation Done! ${NC}"
+}
+
+## Create ssh-config file from template with IP OCTET Pattern
+function create_ssh_config_from_template() {
+    local SSH_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/ssh-config"
+    local SSH_CONFIG_FILE="${CONFIG_PATH}/ssh-config"
+    OCTET=$1 
+    if [ -f "$SSH_CONFIG_FILE" ]; then
+        echo "$SSH_CONFIG_FILE exists"
+        echo "${ORANGE}Reusing Existing SSH Config Files${NC}"
+        return 0
+    fi
+    echo "${BOLD}Generating $SSH_CONFIG_FILE Config File...${NC}"
+    cp "$SSH_TEMPLATE_FILE" "$SSH_CONFIG_FILE"
+    # IP=$(multipass info "$VM_NAME" | grep IPv4 | awk '{print $2}')
+    # OCTET=$(echo $IP | awk -F '.' '{ print $1}')
+    file_replace_text "_GATEWAY_IP_.*$" "$OCTET" "$SSH_CONFIG_FILE"
+    # file_replace_text "_USER_.*$" "$SSH_USER" "$SSH_CONFIG_FILE"
+    echo "${GREEN}$SSH_CONFIG_FILE Generation Done! ${NC}"
+}
+
+## Create user-mgmt-playbook.yml file from template with SSH public key
+function create_user_mgmt_playbook(){
+    local USER_MGMT_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/user-mgmt-playbook.yml"
+    local USER_MGMT_FILE="${CONFIG_PATH}/user-mgmt-playbook.yml"
+    if [ -f "$USER_MGMT_FILE" ]; then
+        echo "$USER_MGMT_FILE Exists"
+        echo "${ORANGE}Reusing Existing $USER_MGMT_FILE File${NC}"
+        return 0
+    fi
+    echo "${BOLD}Generating $USER_MGMT_FILE Config Files...${NC}"
+    cp "$USER_MGMT_TEMPLATE_FILE" "$USER_MGMT_FILE"
+    file_replace_text "_SSH_KEY_.*$" "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}".pub)" "$USER_MGMT_FILE"
+    echo "${GREEN}$USER_MGMT_FILE Generation Done! ${NC}"
+}
+
+
+

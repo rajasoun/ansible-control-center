@@ -1,0 +1,13 @@
+---
+- hosts: all,!localhost
+  become: true
+  become_method: sudo
+
+  vars:
+      docker_edition: 'ce'
+      docker_install_compose: true
+      docker_compose_version: '1.29.2'
+      docker_users: ['ubuntu']
+
+  roles:
+      - geerlingguy.docker
