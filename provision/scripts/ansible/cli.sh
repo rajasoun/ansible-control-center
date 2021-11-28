@@ -3,9 +3,10 @@
 set -eo pipefail
 
 function run(){
-  echo "${GRAY}$(cat "$CONFIG_PATH/vms.list")${NC}"
+  local VM_LIST="config/generated/pre-vm-creation/vms.list"
+  echo "${GRAY}$(cat "$VM_LIST")${NC}"
   # If Ansible Not Available - Run Via Docker
-  if  [ hostname == "control-center"  ]; then
+  if  [ `hostname` == "control-center"  ]; then
     bash -c "$@"
   else
     ansible_runner "$@"
