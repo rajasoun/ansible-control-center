@@ -8,6 +8,15 @@ ANSIBLE_HOME=${ANSIBLE_HOME:-"$HOME/ansible-control-center"}
 
 STATE_FILE="config/generated/post-vm-creation/vm.state"
 
+function run(){
+  # If Ansible Not Available - Run Via Docker
+  if  [ `hostname` == "control-center"  ]; then
+    bash -c "$@"
+  else
+    ansible_runner "$@"
+  fi
+}
+
 # Workaround for Path Limitations in Windows
 function _docker() {
   export MSYS_NO_PATHCONV=1
@@ -70,10 +79,10 @@ function configure_control_center(){
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring control-center ${NC}"
-        ansible_runner "ansible-playbook playbooks/apt-packages.yml"
-        ansible_runner "ansible-playbook playbooks/control-center/main.yml"
-        ansible_runner "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
-        ansible_runner "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
+        run "ansible-playbook playbooks/apt-packages.yml"
+        run "ansible-playbook playbooks/control-center/main.yml"
+        run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
+        run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
         echo ".control-center.conf=done" >> "$STATE_FILE"
     else

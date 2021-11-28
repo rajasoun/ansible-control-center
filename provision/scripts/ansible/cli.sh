@@ -2,15 +2,6 @@
 
 set -eo pipefail
 
-function run(){
-  # If Ansible Not Available - Run Via Docker
-  if  [ `hostname` == "control-center"  ]; then
-    bash -c "$@"
-  else
-    ansible_runner "$@"
-  fi
-}
-
 function ansible_manager() {
   action="$2"
   case $action in
