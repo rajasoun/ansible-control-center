@@ -5,10 +5,10 @@ set -eo pipefail
 function run(){
   echo "${GRAY}$(cat "$CONFIG_PATH/vms.list")${NC}"
   # If Ansible Not Available - Run Via Docker
-  if ! [ $(hostname) == "control-center"  ]; then
-    ansible_runner "$@"
-  else
+  if  [ hostname == "control-center"  ]; then
     bash -c "$@"
+  else
+    ansible_runner "$@"
   fi
 }
 
