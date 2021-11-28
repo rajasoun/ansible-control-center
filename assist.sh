@@ -21,7 +21,7 @@ opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     multipass) multipass_manager "$@" ;;
-      ansible) ansible_manager    "$@" ;;
+      ansible) ansible_manager   "$@" ;;
     *)  help ;;
 esac
 

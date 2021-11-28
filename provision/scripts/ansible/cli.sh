@@ -2,6 +2,16 @@
 
 set -eo pipefail
 
+function run(){
+  echo "${GRAY}$(cat "$CONFIG_PATH/vms.list")${NC}"
+  # If Ansible Not Available - Run Via Docker
+  if ! [ $(hostname) == "control-center"  ]; then
+    ansible_runner "$@"
+  else
+    bash -c "$@"
+  fi
+}
+
 function ansible_manager() {
   action="$2"
   case $action in
@@ -16,10 +26,10 @@ function ansible_manager() {
   status)
     echo "Querying VMs status (ansible ping)..."
     #ansible_runner "ansible-playbook playbooks/ping.yml"
-    ansible_runner "ansible -m ping vms"
+    run "ansible -m ping vms"
     ;;
   run)
-    ansible_runner "$@"
+    run "$@"
     ;;
   *)
     cat <<-EOF

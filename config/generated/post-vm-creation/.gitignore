@@ -9,3 +9,6 @@ user-mgmt-playbook.yml
 
 # ssh-config
 ssh-config
+
+# state file
+vm.state
