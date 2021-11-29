@@ -14,6 +14,8 @@ function ansible_manager() {
     echo "Configure Control Center..."
     echo "If this is your first time starting sandbox this might take a minute..."
     configure_control_center
+    configure_mmonit
+    configure_monit
     ;;
   status)
     echo "Querying VMs status (ansible ping)..."

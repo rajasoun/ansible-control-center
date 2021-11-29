@@ -80,10 +80,49 @@ function configure_control_center(){
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring control-center ${NC}"
         run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
+        run "ansible-playbook playbooks/control-center/etc.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
         echo ".control-center.configure.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
+    fi
+}
+
+# Configure MMonit
+function configure_mmonit(){
+    local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks  
+    local MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
+
+    echo "${GREEN}control-center ${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .mmonit.conf=done) || echo "${RED}mmonit Conf State is Empty${NC}"
+    # If Not Already Configured
+    if [ $CONF_STATE -eq "0" ];then
+        echo "${GREEN} Configuring MMonit ${NC}"
+        run "ansible-vault decrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
+        echo "${GREEN}MMonit License Decrypt Done${NC}"
+        echo "${GREEN}Monit Installation & Configuration Done!${NC}"
+        run "ansible-vault encrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
+        echo "MMonit License Encryption Done"
+        echo ".mmonit.conf=done" >> "$STATE_FILE"
+    else
+        echo "${BLUE} Skipping mmonit Configuration ${NC}"
+    fi
+}
+
+# Configure Monit
+function configure_monit(){
+    local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks  
+
+    echo "${GREEN}control-center ${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .monit.conf=done) || echo "${RED}monit Conf State is Empty${NC}"
+    # If Not Already Configured
+    if [ $CONF_STATE -eq "0" ];then
+        echo "${GREEN} Configuring Monit ${NC}"
+        # Install & Configure Monit
+        run "ansible-playbook $PLAYBOOK_HOME/monit.yml"
+        echo ".monit.conf=done" >> "$STATE_FILE"
+    else
+        echo "${BLUE} Skipping monit Configuration ${NC}"
     fi
 }
 
