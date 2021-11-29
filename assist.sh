@@ -12,7 +12,7 @@ function help(){
     echo "Usage: $0  {local | configure}" >&2
     echo
     echo "   local      -> Manage multipass Sandbox Environment via Multipass "
-    echo "   configure  -> Ansible Docker Runner "
+    echo "   configure  -> Ansible Based Configuration "
     echo
     return 1
 }
@@ -21,9 +21,9 @@ opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     local) 
-        check_if_vm
+        check_if_vm || raise_error "local can't be run on VM"
         multipass_manager "$@" ;;
-    ansible) ansible_manager   "$@" ;;
+    configure) ansible_manager   "$@" ;;
     *)  help ;;
 esac
 

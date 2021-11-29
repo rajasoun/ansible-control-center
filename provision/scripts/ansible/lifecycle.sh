@@ -75,19 +75,35 @@ function ansible_runner() {
 # Configure Control Center based on state file
 function configure_control_center(){
     echo "${GREEN}control-center ${NC}"
-    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.configure.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring control-center ${NC}"
         run "ansible-playbook playbooks/apt-packages.yml"
-        run "ansible-playbook playbooks/control-center/main.yml"
         run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
-        run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
-        echo ".control-center.conf=done" >> "$STATE_FILE"
+        echo ".control-center.configure.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
     fi
 }
+
+# Configure Control Center based on state file
+function prepare_control_center(){
+    echo "${GREEN}control-center ${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.prepare.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
+    # If Not Already Configured
+    if [ $CONF_STATE -eq "0" ];then
+        [ !check_if_vm ] || raise_error "prepare can't run on VM"
+        echo "${GREEN} Preparing control-center ${NC}"
+        run "ansible-playbook playbooks/control-center/prepare.yml"
+        run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
+        echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
+        echo ".control-center.prepare.conf=done" >> "$STATE_FILE"
+    else
+        echo "${BLUE} Skipping control-center Preparation ${NC}"
+    fi
+}
+
 
 

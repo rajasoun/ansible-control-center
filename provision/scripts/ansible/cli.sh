@@ -5,6 +5,10 @@ set -eo pipefail
 function ansible_manager() {
   action="$2"
   case $action in
+  prepare)
+      echo "Prepare Control Center from Local Host..."
+      prepare_control_center
+      ;;
   up)
     echo "Configuring sandbox environment..."
     echo "If this is your first time starting sandbox this might take a minute..."
@@ -25,6 +29,7 @@ function ansible_manager() {
     cat <<-EOF
 sandbox commands:
 ----------------
+  prepare            -> Transfer Configuration Files to Control Center
   up                 -> configure all vms in sandbox environment
   down               -> stop all vms in sandbox environment
   status             -> displays status - ansible ping

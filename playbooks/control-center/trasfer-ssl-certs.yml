@@ -5,7 +5,7 @@
   become_method: sudo
 
   vars:
-      LOCAL_CONFIG: 'config/ssl-certs'
+      LOCAL_CONFIG: '../../config/ssl-certs'
       USER_HOME: '/home/ubuntu'
 
   pre_tasks:

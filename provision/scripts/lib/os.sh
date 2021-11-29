@@ -113,7 +113,9 @@ function reportResults() {
 
 function check_if_vm(){
   if  [ -x "$(command -v dmidecode)" ]; then
-    raise_error "local can't be run in VM"
+    return 1
+  else 
+    return 0
   fi
 }
 
