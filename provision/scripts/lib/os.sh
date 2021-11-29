@@ -146,4 +146,16 @@ function confirm() {
   done
 }
 
+function display_apps_status(){
+  APPS_LIST=$1
+  if [ -f $APPS_LIST  ];then
+      while read -r app
+      do
+        if [[ ! -z $app ]]
+        then
+          display_url_status $app
+        fi
+      done < $APPS_LIST
+  fi 
+}
 

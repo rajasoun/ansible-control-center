@@ -12,6 +12,7 @@ function multipass_manager() {
   up)
     if [ ! -f config/generated/pre-vm-creation/vms.list ]; then
       run_prepare
+      confirm
     fi 
     start=$(date +%s)
     echo "Spinning up multipass sandbox environment..."
@@ -34,7 +35,7 @@ function multipass_manager() {
   status)
     echo "Querying multipass sandbox status..."
     multipass list 
-    display_apps_status 
+    display_apps_status "config/generated/pre-vm-creation/apps.list"
     ;;
   enter)
     shell_to_control_center

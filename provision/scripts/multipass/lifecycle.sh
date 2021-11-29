@@ -133,18 +133,6 @@ function generate_post_vm_config_files(){
   generate_inventory_file
 }
 
-function display_apps_status(){
-  if [ -f $CONFIG_PATH/apps.list  ];then
-      while read -r app
-      do
-        if [[ ! -z $app ]]
-        then
-          display_url_status $app
-        fi
-      done < $CONFIG_PATH/apps.list
-  fi 
-}
-
 function exit_on_pre_condition_checks(){
   check "multipass" multipass --version 
   check "docker" docker --version 
@@ -156,6 +144,5 @@ function run_prepare(){
     exit_on_pre_condition_checks
     generate_pre_vm_config_files
     echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/pre-vm-creation/vms.list${NC} (optional)\n${NC}"
-    confirm
 }
 
