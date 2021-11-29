@@ -7,9 +7,6 @@
       os_environment:
           - key: PIP_PACKAGES
             value: '$HOME/.local/bin'
-          - key: KUBECONFIG
-            value: '$HOME/ansible-managed/k3s.yaml'
-
   tasks:
       - name: Set /etc/environment
         lineinfile:
