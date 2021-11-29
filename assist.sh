@@ -13,6 +13,7 @@ function help(){
     echo
     echo "   local      -> Manage multipass Sandbox Environment via Multipass "
     echo "   ansible    -> Ansible Based Configuration "
+    echo "   k3s        -> k3s Cluster"
     echo "   wrapper    -> Wrapper for ansible,openstack and aws "
     echo
     return 1
@@ -25,6 +26,9 @@ case $choice in
         is_vm && raise_error "local can't be run on VM"
         multipass_manager "$@" ;;
     ansible) ansible_manager   "$@" ;;
+    k3s) 
+        ! is_vm && raise_error "k3s can't run on host"
+        k3s_manager "$@" ;;
     wrapper) wrapper_manager   "$@" ;;
     *)  help ;;
 esac

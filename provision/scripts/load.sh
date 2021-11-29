@@ -21,4 +21,7 @@ source "$SCRIPT_DIR/cli/multipass.sh"
 source "$SCRIPT_DIR/cli/wrapper.sh"
 # shellcheck source=scripts/cli/ansible.sh"
 source "$SCRIPT_DIR/cli/ansible.sh"
+# shellcheck source=scripts/cli/k3s.sh"
+source "$SCRIPT_DIR/cli/k3s.sh"
+
 
