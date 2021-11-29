@@ -12,7 +12,8 @@ function help(){
     echo "Usage: $0  {local | ansible}" >&2
     echo
     echo "   local      -> Manage multipass Sandbox Environment via Multipass "
-    echo "   ansible  -> Ansible Based Configuration "
+    echo "   ansible    -> Ansible Based Configuration "
+    echo "   wrapper    -> Wrapper for ansible,openstack and aws "
     echo
     return 1
 }
