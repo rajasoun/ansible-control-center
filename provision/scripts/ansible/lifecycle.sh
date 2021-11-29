@@ -93,13 +93,14 @@ function configure_mmonit(){
     local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks  
     local MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
 
-    echo "${GREEN}control-center ${NC}"
+    echo "${GREEN}mmonit${NC}"
     CONF_STATE=$(cat $STATE_FILE | grep -c .mmonit.conf=done) || echo "${RED}mmonit Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring MMonit ${NC}"
         run "ansible-vault decrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "${GREEN}MMonit License Decrypt Done${NC}"
+        run "ansible-playbook $PLAYBOOK_HOME/mmonit.yml"
         echo "${GREEN}Monit Installation & Configuration Done!${NC}"
         run "ansible-vault encrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "MMonit License Encryption Done"
