@@ -36,7 +36,6 @@ locally, or in Openstack
 ```
 ./assist.sh ansible prepare
 ./assist.sh local   enter
-./assist.sh local   enter
 ./assist.sh ansible configure
 ```
 
