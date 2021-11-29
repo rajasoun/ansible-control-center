@@ -1,6 +1,6 @@
 ---
 - name: Configure control-center
-  hosts: control-center
+  hosts: vms
   become: true
   become_method: sudo
 
@@ -9,6 +9,6 @@
         blockinfile:
             path: /etc/hosts
             block: |
-                {% for host in groups['all'] | difference(['localhost']) %}
+                {% for host in groups['vms'] | difference(['localhost']) %}
                 {{ hostvars[host].ansible_ssh_host }} {{ host }}
                 {% endfor %}
