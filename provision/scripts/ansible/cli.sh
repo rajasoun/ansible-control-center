@@ -20,7 +20,7 @@ function ansible_manager() {
     run "ansible -m ping vms"
     ;;
   run)
-    run "$@"
+    run "$3"
     ;;
   *)
     cat <<-EOF
