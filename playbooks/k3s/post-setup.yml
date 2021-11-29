@@ -8,9 +8,9 @@
       ansible.builtin.fetch:
         src: /tmp/k3s.yaml
         dest: /tmp/
-    - name: Configure k3s.yaml 
-      ansible.builtin.shell: sed -i "s/127.0.0.1/k3s-master/" /tmp/k3s-master/tmp/k3s.yaml
     - name: Copy k3s.yaml to config
       ansible.builtin.copy: 
         src: /tmp/k3s-master/tmp/k3s.yaml
         dest: /home/ubuntu/ansible-control-center/config/generated/post-vm-creation
+    # - name: Configure k3s.yaml 
+    #   ansible.builtin.shell: sed -i "s/127.0.0.1/k3s-master/" /tmp/k3s-master/tmp/k3s.yaml
