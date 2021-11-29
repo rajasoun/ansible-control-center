@@ -19,7 +19,7 @@ locally, or in Openstack
 1. Prepare Configuration Files  
 
 ```
-./assist.bash local prepare
+./assist.sh local prepare
 ```
 
 2. Edit `config/generated/pre-vm-creation/vms.list` to match the needs
@@ -28,7 +28,16 @@ locally, or in Openstack
 3. Proivision VMs
 
 ```
-./assist.bash local up
+./assist.sh local up
+```
+
+4. Configure VMs
+
+```
+./assist.sh ansible prepare
+./assist.sh local   enter
+./assist.sh local   enter
+./assist.sh ansible configure
 ```
 
 4. Install Dcoker and Docker-Compose in observability, dashboard and reverse-proxy
