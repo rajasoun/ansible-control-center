@@ -11,7 +11,14 @@
       - name: update apt if needed # Update if not modified since the last 12 hours
         apt: update_cache=yes
         when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
-        
+      - name: Update all packages to their latest version
+        apt:
+          name: "*"
+          state: latest
+      - name: Remove dependencies that are no longer required
+        apt:
+          autoremove: yes
+
 - hosts: control-center
   become: true
   become_method: sudo
