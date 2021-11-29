@@ -110,14 +110,14 @@ function configure_monit(){
     local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks  
 
     echo "${GREEN}monit - configuration${NC}"
-    CONF_STATE=$(cat $STATE_FILE | grep -c .monit.conf=done) || echo "${RED}monit Conf State is Empty${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .monit-agent.conf=done) || echo "${RED}monit Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring Monit ${NC}"
         # Install & Configure Monit
         run "ansible-playbook $PLAYBOOK_HOME/monit.yml"
         echo "${GREEN}Monit Installation & Configuration Done!${NC}"
-        echo ".monit.conf=done" >> "$STATE_FILE"
+        echo ".monit-agent.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping monit Configuration ${NC}"
     fi
