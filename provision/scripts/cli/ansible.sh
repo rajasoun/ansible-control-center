@@ -23,6 +23,7 @@ function ansible_manager() {
     run "ansible-playbook playbooks/k3s/prereq.yml"
     run "ansible-playbook playbooks/k3s/setup.yml"
     run "ansible-playbook playbooks/k3s/post-setup.yml"
+    ;;
   status)
     echo "Querying VMs status (ansible ping)..."
     run "ansible-playbook playbooks/ping.yml"
