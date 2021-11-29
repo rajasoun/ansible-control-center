@@ -43,7 +43,7 @@ function multipass_manager() {
     cat <<-EOF
 sandbox commands:
 ----------------
-  precheck           -> Prerequsites Check
+  prepare            -> Prerequsites Check & Config Preparation
   up                 -> spin up the multipass sandbox environment
   down               -> tear down the multipass sandbox environment
   status             -> displays status 
