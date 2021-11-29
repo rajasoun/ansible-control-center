@@ -20,7 +20,9 @@ function help(){
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
-    local) multipass_manager "$@" ;;
+    local) 
+        check_if_vm
+        multipass_manager "$@" ;;
     ansible) ansible_manager   "$@" ;;
     *)  help ;;
 esac
