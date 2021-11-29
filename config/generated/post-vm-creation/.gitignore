@@ -12,3 +12,7 @@ ssh-config
 
 # state file
 vm.state
+
+# k3s config
+k3s.yaml 
+

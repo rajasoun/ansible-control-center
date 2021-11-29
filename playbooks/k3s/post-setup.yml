@@ -10,6 +10,11 @@
         dest: /tmp/
     - name: Ping all Hosts
       ansible.builtin.ping:
-    - name: Ping all Hosts
-      ansible.builtin.inventory:   
-
+    - name: Get IP Address of k3s-master
+      ansible.builtin.shell: ansible-inventory  --host k3s-master | jq -r '.ansible_ssh_host' > /tmp/k3s-master-ip
+    - name: Configure k3s.yaml 
+      ansible.builtin.shell: sed -i '' "s/127.0.0.1/$(cat k3s-master-ip)/" /tmp/k3s-master/tmp/k3s.yaml
+    - name: Copy k3s.yaml to config
+      ansible.builtin.copy: 
+        src: /tmp/k3s-master/tmp/k3s.yaml
+        dest: /home/ubuntu/ansible-control-center/config/generated/post-vm-creation
