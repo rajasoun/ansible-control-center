@@ -8,7 +8,6 @@ inventory
 *.key
 *.crt
 playbooks/config/ssh-config
-playbooks/monit.yml
 playbooks/createusers.yml
 .ansible
 keys/*

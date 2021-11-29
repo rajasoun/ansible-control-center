@@ -1,0 +1,58 @@
+---
+- hosts: vms
+  become: true
+  become_method: sudo
+
+  vars:
+      monit_services:
+          - name: SSHd
+            type: process
+            target: /var/run/sshd.pid
+            start: /usr/sbin/service sshd start
+            stop: /usr/sbin/service sshd stop
+
+          - name: Internet
+            type: host
+            target: google.com
+            rules:
+                - 'if failed port 443 type tcpSSL protocol http then alert'
+
+          # load average is the number of processes in the system
+          # run queue per CPU core, averaged over the specified time period
+          - name: '{{ ansible_hostname }}'
+            type: system
+            rules:
+                - 'if swap usage > 25% then alert'
+                - 'if loadavg (1min) per core > 2 for 15 cycles then alert'
+                - 'if loadavg (5min) per core > 1.5 for 10 cycles then alert'
+                - 'if loadavg (15min) per core > 1 for 8 cycles then alert'
+                - 'if cpu usage (user) > 70% for 8 cycles then alert'
+                - 'if cpu usage (system) > 40% for 8 cycles then alert'
+                - 'if cpu usage (wait) > 20%  for 8 cycles then alert'
+
+          - name: 'Disk'
+            type: filesystem
+            target: '/dev/vda1'
+            rules:
+                - 'if space usage > 60% for 5 times within 15 cycles then alert'
+                - 'if space usage > 80% then alert'
+                - 'if inode usage > 80% then alert'
+
+      monit_webinterface_enabled: true
+      monit_webinterface_acl_rules:
+          - 'localhost'
+          - 'admin:monit'
+
+      # SSL Connection to MMonit
+      mmonit_server_scheme: https
+      mmonit_server_ip: mmonit
+      mmonit_server_port: 443
+
+      # # Non SSL Connection to MMonit
+      # mmonit_server_scheme: http
+      # mmonit_server_ip: 192.168.64.52
+      # mmonit_server_port: 80
+
+  roles:
+      - role: rajasoun.ansible_role_monit
+      - role: cloudalchemy.node_exporter
