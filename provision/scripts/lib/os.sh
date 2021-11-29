@@ -8,6 +8,8 @@ GREEN=$'\e[32m'
 BLUE=$'\e[34m'
 ORANGE=$'\x1B[33m'
 
+FAILED=()
+
 # Returns true (0) if this is an OS X server or false (1) otherwise.
 function os_is_darwin {
   [[ $(uname -s) == "Darwin" ]]
@@ -81,4 +83,38 @@ function display_url_status(){
       *)    echo "${HOST}  🔴 | Status: $HTTP_STATUS" ;;
     esac
 }
+
+function echoStderr(){
+    echo "$@" 1>&2
+}
+
+function check() {
+    app=$1
+    shift
+    if [ "$(command -v "$@")" ] ; then
+        echo "✅  $app check Passed!"
+        return 0
+    else
+        echoStderr "❌ $app check failed."
+        FAILED+=("$app")
+        return 1
+    fi
+}
+
+function reportResults() {
+    if [ ${#FAILED[@]} -ne 0 ]; then
+        echoStderr -e "\n💥  Failed tests:" "${FAILED[@]}"
+        return 1
+    else
+        echo -e "\n💯 - 🍻 All passed!"
+        return 0
+    fi
+}
+
+function check_if_vm(){
+  if  [ -x "$(command -v dmidecode)" ]; then
+    raise_error "local can't be run in VM"
+  fi
+}
+
 

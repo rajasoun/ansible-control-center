@@ -143,3 +143,9 @@ function display_apps_status(){
       done < $CONFIG_PATH/apps.list
   fi 
 }
+
+function exit_on_pre_condition_checks(){
+  check "multipass" multipass --version 
+  reportResults
+}
+

@@ -9,10 +9,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/provision/scripts/load.sh"
 
 function help(){
-    echo "Usage: $0  {multipass | ansible}" >&2
+    echo "Usage: $0  {local | configure}" >&2
     echo
-    echo "   multipass  -> Manage multipass Sandbox Environment "
-    echo "   ansible    -> Ansible Docker Runner "
+    echo "   local      -> Manage multipass Sandbox Environment via Multipass "
+    echo "   configure  -> Ansible Docker Runner "
     echo
     return 1
 }
@@ -20,8 +20,8 @@ function help(){
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
-    multipass) multipass_manager "$@" ;;
-      ansible) ansible_manager   "$@" ;;
+    local) multipass_manager "$@" ;;
+    ansible) ansible_manager   "$@" ;;
     *)  help ;;
 esac
 

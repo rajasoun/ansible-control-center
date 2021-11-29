@@ -2,9 +2,14 @@
 
 set -eo pipefail
 
+
 function multipass_manager() {
   action="$2"
   case $action in
+  precheck)
+    echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
+    exit_on_pre_condition_checks
+    ;;
   up)
     echo "Spinning up multipass sandbox environment..."
     echo "If this is your first time starting sandbox this might take a minute..."
@@ -32,6 +37,7 @@ function multipass_manager() {
     cat <<-EOF
 sandbox commands:
 ----------------
+  precheck           -> Prerequsites Check
   up                 -> spin up the multipass sandbox environment
   down               -> tear down the multipass sandbox environment
   status             -> displays status 
