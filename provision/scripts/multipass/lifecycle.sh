@@ -146,6 +146,7 @@ function display_apps_status(){
 
 function exit_on_pre_condition_checks(){
   check "multipass" multipass --version 
+  check "docker" docker --version 
   reportResults
 }
 

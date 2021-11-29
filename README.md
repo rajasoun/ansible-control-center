@@ -12,43 +12,26 @@ locally, or in Openstack
 
 0. Add .vault_password fro MMonit license and SSL Certificates
 
--   Add `.vault_password` to `keys` directory with the vault password
--   Add `ssl_certificate.crt` to `keys` directory
--   Add `ssl_certificate_key.key` to `keys` directory
+-   Add `ssl_certificate.crt` to `config/ssl-certs` directory
+-   Add `ssl_certificate_key.key` to `config/ssl-certs` directory
+-   Add `.vault_password` to `config/generated/post-vm-creation` directory 
 
-1. Create Infrastructure VMs locally or in cloud
-    - control-center
-    - mmonit
-    - observability
-    - reverse-proxy
+1. Prepare Configuration Files  
 
 ```
-./assist.bash {multipass | openstack}
+./assist.bash local prepare
 ```
 
-Multipass Specific (Local)
+2. Edit `config/generated/pre-vm-creation/vms.list` to match the needs
+
+
+3. Proivision VMs
 
 ```
-./assist.bash multipass
+./assist.bash local up
 ```
 
-Open Stack (On Prem Cloud)
-
-```
-provision/openstack/shell/run.sh
-source config/{stage|production}/<openrc.sh>
-cd /workspace
-```
-
-2. Install & Configure MMonit/Monoit
-
-```
-multipass shell control-center
-cd ansible-control-center/
-provision/common/mmonit_monit.sh
-```
-
-3. Install Dcoker and Docker-Compose in observability, dashboard and reverse-proxy
+4. Install Dcoker and Docker-Compose in observability, dashboard and reverse-proxy
 
 ```
 ansible-playbook playbooks/observability.yml
