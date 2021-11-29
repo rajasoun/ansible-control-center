@@ -23,6 +23,5 @@
         line='export KUBECONFIG=$HOME/ansible-managed/k3s.yaml' 
         insertafter='EOF' 
         state=present
-    - name: Set Label for k3s-worker
-      ansible.builtin.shell: kubectl label nodes k3s-worker kubernetes.io/role=worker
+
 
