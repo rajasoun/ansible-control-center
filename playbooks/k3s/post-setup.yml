@@ -8,6 +8,8 @@
       ansible.builtin.fetch:
         src: /tmp/k3s.yaml
         dest: /tmp/
+  
+  - hosts: control-center
     - name: Copy k3s.yaml to config
       ansible.builtin.copy: 
         src: /tmp/k3s-master/tmp/k3s.yaml
