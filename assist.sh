@@ -21,7 +21,7 @@ opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     local) 
-        check_if_vm || raise_error "local can't be run on VM"
+        [  check_if_vm ] || raise_error "local can't be run on VM"
         multipass_manager "$@" ;;
     configure) ansible_manager   "$@" ;;
     *)  help ;;

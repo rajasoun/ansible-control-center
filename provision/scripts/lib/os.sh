@@ -112,11 +112,14 @@ function reportResults() {
 }
 
 function check_if_vm(){
-  if  [ -x "$(command -v dmidecode)" ]; then
-    return 1
-  else 
-    return 0
-  fi
+  OS="`uname`"
+  case $OS in
+    'Linux')
+      # Assume VM if OS is Linux
+      return 0
+      ;;
+    *) return 1 ;;
+  esac
 }
 
 

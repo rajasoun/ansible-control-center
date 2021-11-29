@@ -79,7 +79,6 @@ function configure_control_center(){
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring control-center ${NC}"
-        run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
@@ -96,6 +95,7 @@ function prepare_control_center(){
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Preparing control-center ${NC}"
+        run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
