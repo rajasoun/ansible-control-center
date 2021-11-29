@@ -81,6 +81,7 @@ function configure_control_center(){
         echo "${GREEN} Configuring control-center ${NC}"
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
+        run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
         echo ".control-center.configure.conf=done" >> "$STATE_FILE"
     else
