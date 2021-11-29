@@ -61,7 +61,7 @@ function ansible_runner() {
         -v "${PWD}/config/generated/pre-vm-creation/id_rsa:/home/ubuntu/.ssh/id_rsa" \
         -v "${PWD}/config/generated/post-vm-creation/ssh-config:/home/ubuntu/.ssh/ssh-config" \
         -v "${PWD}/.ansible:/home/ansible/.ansible" \
-        cytopia/ansible:latest-tools bash -c "$@"
+        rajasoun/ansible-runner:0.1.0 bash -c "$@"
 
     case "$?" in
         0)
