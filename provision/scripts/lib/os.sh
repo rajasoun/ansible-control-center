@@ -124,4 +124,26 @@ function is_vm (){
   esac
 }
 
+function confirm() {
+  local _prompt _default _response
+ 
+  if [ "$1" ]; then _prompt="$1"; else _prompt="Continue -> "; fi
+  _prompt="$_prompt [y/n] ?"
+ 
+  # Loop forever until the user enters a valid response (Y/N or Yes/No).
+  while true; do
+    read -r -p "$_prompt " _response
+    case "$_response" in
+      [Yy][Ee][Ss]|[Yy]) # Yes or Y (case-insensitive).
+        return 0
+        ;;
+      [Nn][Oo]|[Nn])  # No or N.
+        return 1
+        ;;
+      *) # Anything else (including a blank) is invalid.
+        ;;
+    esac
+  done
+}
+
 

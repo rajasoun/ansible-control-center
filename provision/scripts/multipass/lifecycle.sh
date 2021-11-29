@@ -151,3 +151,11 @@ function exit_on_pre_condition_checks(){
   reportResults
 }
 
+function run_prepare(){
+    echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
+    exit_on_pre_condition_checks
+    generate_pre_vm_config_files
+    echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/pre-vm-creation/vms.list${NC} (optional)\n${NC}"
+    confirm
+}
+

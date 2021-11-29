@@ -7,12 +7,12 @@ function multipass_manager() {
   action="$2"
   case $action in
   prepare)
-    echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
-    exit_on_pre_condition_checks
-    generate_pre_vm_config_files
-    echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/pre-vm-creation/vms.list${NC} (optional)\n${NC}"
+    run_prepare
     ;;
   up)
+    if [ ! -f config/generated/pre-vm-creation/vms.list ]; then
+      run_prepare
+    fi 
     start=$(date +%s)
     echo "Spinning up multipass sandbox environment..."
     echo "If this is your first time starting sandbox this might take a minute..."
