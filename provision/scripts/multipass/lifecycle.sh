@@ -65,14 +65,14 @@ function stop_delete_vms(){
 
 function clean_generated_config_files(){
     rm -fr \
-      $CONFIG_PATH/id_rsa \
-      $CONFIG_PATH/id_rsa.pub \
-      $CONFIG_PATH/ssh-config \
-      $CONFIG_PATH/cloud-init.yaml \
-      $CONFIG_PATH/user-mgmt-playbook.yml \
-      $CONFIG_PATH/vms.sh \
-      $CONFIG_PATH/vms.list \
-      $CONFIG_PATH/apps.list \
+      config/generated/pre-vm-creation/id_rsa \
+      config/generated/pre-vm-creation/id_rsa.pub \
+      config/generated/pre-vm-creation/ssh-config \
+      config/generated/pre-vm-creation/cloud-init.yaml \
+      config/generated/pre-vm-creation/user-mgmt-playbook.yml \
+      config/generated/pre-vm-creation/vms.sh \
+      config/generated/pre-vm-creation/vms.list \
+      config/generated/pre-vm-creation/apps.list \
       config/generated/post-vm-creation/inventory \
       config/generated/post-vm-creation/ssh-config \
       config/generated/post-vm-creation/.vault_password 
