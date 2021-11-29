@@ -11,7 +11,7 @@
     - name: Ping all Hosts
       ansible.builtin.ping:
     - name: Get IP Address of k3s-master
-      ansible.builtin.shell: /usr/bin/ansible-inventory  --host k3s-master | jq -r '.ansible_ssh_host' > /tmp/k3s-master-ip
+      ansible.builtin.shell: /usr/bin/ansible-inventory  --host k3s-master | /usr/bin/jq -r '.ansible_ssh_host' > /tmp/k3s-master-ip
     - name: Configure k3s.yaml 
       ansible.builtin.shell: sed -i '' "s/127.0.0.1/$(cat k3s-master-ip)/" /tmp/k3s-master/tmp/k3s.yaml
     - name: Copy k3s.yaml to config
