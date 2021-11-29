@@ -8,5 +8,8 @@
 - src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-bom_management.git
   version: master
 
+- src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-authselect.git
+  version: master
+
 - src: git+https://wwwin-github.cisco.com/sto-ccc/ansible-duo_install.git
   version: master
