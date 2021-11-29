@@ -13,7 +13,7 @@ function run(){
   if  [ `hostname` == "control-center"  ]; then
     bash -c "$@"
   else
-    ansible_runner "$@"
+    wrapper_runner "$@"
   fi
 }
 
@@ -42,16 +42,12 @@ function _docker() {
   return 0
 }
 
-function ansible_runner() {
-    if [ ! -f "config/generated/post-vm-creation/inventory" ]; then
-        echo "Inventory File Not Availabe. Exiting..."
-        exit 1
-    fi
+function wrapper_runner() {
     # Only allocate tty if one is detected. See - https://stackoverflow.com/questions/911168
     if [[ -t 0 ]]; then IT+=(-i); fi
     if [[ -t 1 ]]; then IT+=(-t); fi
 
-    echo "Running $1 in Ansible Container"
+    echo "Running in Wrapper Container"
     _docker run --rm "${IT[@]}"  \
         --hostname control-center \
         --name control-center \
@@ -61,7 +57,7 @@ function ansible_runner() {
         -v "${PWD}/config/generated/pre-vm-creation/id_rsa:/home/ubuntu/.ssh/id_rsa" \
         -v "${PWD}/config/generated/post-vm-creation/ssh-config:/home/ubuntu/.ssh/ssh-config" \
         -v "${PWD}/.ansible:/home/ansible/.ansible" \
-        rajasoun/ansible-runner:0.1.0 bash -c "$@"
+        rajasoun/wrapper-runner:0.1.0 bash -c "$@"
 
     case "$?" in
         0)
@@ -70,7 +66,6 @@ function ansible_runner() {
             echo "FAILED " ;;
     esac
 }
-
 
 # Configure Control Center based on state file
 function configure_control_center(){

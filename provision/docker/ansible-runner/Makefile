@@ -1,5 +1,5 @@
 CONTEXT="."
-IMAGE_NAME=rajasoun/ansible-runner:0.1.0
+IMAGE_NAME=rajasoun/wrapper-runner:0.1.0
 # HELP
 # This will output the help for each task
 # thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

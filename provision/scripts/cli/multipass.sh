@@ -2,6 +2,8 @@
 
 set -eo pipefail
 
+# shellcheck source=scripts/lifecycle/multipass.sh"
+source "$SCRIPT_DIR/lifecycle/multipass.sh"
 
 function multipass_manager() {
   action="$2"

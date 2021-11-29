@@ -24,6 +24,7 @@ case $choice in
         is_vm && raise_error "local can't be run on VM"
         multipass_manager "$@" ;;
     ansible) ansible_manager   "$@" ;;
+    wrapper) wrapper_manager   "$@" ;;
     *)  help ;;
 esac
 

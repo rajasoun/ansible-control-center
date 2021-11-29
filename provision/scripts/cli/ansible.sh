@@ -22,7 +22,11 @@ function ansible_manager() {
     #ansible_runner "ansible-playbook playbooks/ping.yml"
     run "ansible -m ping vms"
     ;;
-  run)
+  run)    
+    if [ ! -f "config/generated/post-vm-creation/inventory" ]; then
+        echo "Inventory File Not Availabe. Exiting..."
+        exit 1
+    fi
     run "$3"
     ;;
   *)
