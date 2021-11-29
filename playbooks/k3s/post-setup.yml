@@ -8,4 +8,8 @@
       ansible.builtin.fetch:
         src: /tmp/k3s.yaml
         dest: /tmp/
+    - name: Ping all Hosts
+      ansible.builtin.ping:
+    - name: Ping all Hosts
+      ansible.builtin.inventory:   
 

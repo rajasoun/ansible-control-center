@@ -67,6 +67,9 @@ ansible-playbook playbooks/k3s/setup.yml
 
 multipass exec k3s-master -- sudo cat /etc/rancher/k3s/k3s.yaml > k3s.yaml
 IP=$(multipass info "k3s-master" | grep IPv4 | awk '{print $2}')
+
+ansible-inventory  --host k3s-master | jq -r '.ansible_ssh_host'
+
 sed -i '' "s/127.0.0.1/$IP/" k3s.yaml
 export KUBECONFIG=$PWD/k3s.yaml
 
