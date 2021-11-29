@@ -13,16 +13,18 @@ function ansible_manager() {
   control-center)
     ! is_vm && raise_error "configure can't run from host"
     echo "Configure Control Center..."
-    echo "If this is your first time starting sandbox this might take a minute..."
     configure_control_center
-    configure_mmonit
-    configure_monit
     ;;
   k3s) 
     ! is_vm && raise_error "k3s can't run on host"
     run "ansible-playbook playbooks/k3s/prereq.yml"
     run "ansible-playbook playbooks/k3s/setup.yml"
     run "ansible-playbook playbooks/k3s/post-setup.yml"
+    ;;
+  monitor) 
+    ! is_vm && raise_error "k3s can't run on host"
+    configure_mmonit
+    configure_monit
     ;;
   status)
     echo "Querying VMs status (ansible ping)..."
