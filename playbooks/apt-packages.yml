@@ -26,3 +26,8 @@
                 - python-netaddr
                 - software-properties-common
                 - ansible
+
+      - name: Install "kubectl" 
+        community.general.snap:
+          name: kubectl
+          classic: yes
