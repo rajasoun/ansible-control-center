@@ -26,6 +26,7 @@
                 - python-netaddr
                 - software-properties-common
                 - ansible
+                - jq
 
       - name: Install "kubectl" 
         community.general.snap:
