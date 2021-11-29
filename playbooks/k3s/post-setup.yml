@@ -1,0 +1,11 @@
+---
+- hosts: master
+  become: yes
+  tasks:
+    - name: Execute the command in remote shell
+      ansible.builtin.shell: cat /etc/rancher/k3s/k3s.yaml > /tmp/k3s.yaml
+    - name: Fetch k3s.yaml from master to control-center 
+      ansible.builtin.fetch:
+        src: /tmp/k3s.yaml
+        dest: /tmp/
+
