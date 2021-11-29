@@ -43,6 +43,7 @@ sandbox commands:
 ----------------
   prepare            -> Transfer Configuration Files to Control Center
   control-center     -> Configure Control Center
+  monitor            -> Configure Monitoring 
   k3s                -> Configure k3s
   status             -> Displays status - ansible ping
   run                -> Run Ansible Command
