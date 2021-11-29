@@ -91,11 +91,11 @@ function configure_control_center(){
 
 # Configure Control Center based on state file
 function prepare_control_center(){
+    [ !check_if_vm ] || raise_error "prepare can't run from VM"
     echo "${GREEN}control-center ${NC}"
     CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.prepare.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
-        [ !check_if_vm ] || raise_error "prepare can't run on VM"
         echo "${GREEN} Preparing control-center ${NC}"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
