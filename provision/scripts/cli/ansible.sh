@@ -11,6 +11,7 @@ function ansible_manager() {
       prepare_control_center
       ;;
   configure)
+    ! is_vm && raise_error "configure can't run from host"
     echo "Configure Control Center..."
     echo "If this is your first time starting sandbox this might take a minute..."
     configure_control_center
