@@ -6,7 +6,7 @@ function ansible_manager() {
   action="$2"
   case $action in
   prepare)
-      [  check_if_vm ] || raise_error "prepare can't run from VM"
+      is_vm && raise_error "prepare can't run from VM"
       echo "Prepare Control Center from Local Host..."
       prepare_control_center
       ;;

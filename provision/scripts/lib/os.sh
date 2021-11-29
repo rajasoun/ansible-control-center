@@ -111,14 +111,16 @@ function reportResults() {
     fi
 }
 
-function check_if_vm(){
-  OS="`uname`"
+function is_vm (){
+  OS="$(uname)"
   case $OS in
     'Linux')
       # Assume VM if OS is Linux
       return 0
       ;;
-    *) return 1 ;;
+    *) 
+      return 1 
+      ;;
   esac
 }
 
