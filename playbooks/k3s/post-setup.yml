@@ -17,3 +17,9 @@
         dest: /home/ubuntu/ansible-managed/k3s.yaml
     - name: Configure k3s.yaml 
       ansible.builtin.shell: sed -i "s/127.0.0.1/k3s-master/" /home/ubuntu/ansible-managed/k3s.yaml
+    - name: Set KUBECONFIG Environment 
+      lineinfile: 
+        dest=/home/ubuntu/.bashrc 
+        line='export KUBECONFIG=$HOME/ansible-managed/k3s.yaml' 
+        insertafter='EOF' 
+        state=present
