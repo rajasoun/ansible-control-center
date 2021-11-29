@@ -9,7 +9,8 @@
         src: /tmp/k3s.yaml
         dest: /tmp/
   
-  - hosts: control-center
+- hosts: control-center
+  tasks:
     - name: Copy k3s.yaml to config
       ansible.builtin.copy: 
         src: /tmp/k3s-master/tmp/k3s.yaml
