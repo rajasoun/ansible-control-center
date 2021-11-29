@@ -9,10 +9,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/provision/scripts/load.sh"
 
 function help(){
-    echo "Usage: $0  {local | configure}" >&2
+    echo "Usage: $0  {local | ansible}" >&2
     echo
     echo "   local      -> Manage multipass Sandbox Environment via Multipass "
-    echo "   configure  -> Ansible Based Configuration "
+    echo "   ansible  -> Ansible Based Configuration "
     echo
     return 1
 }
@@ -23,7 +23,7 @@ case $choice in
     local) 
         [  check_if_vm ] || raise_error "local can't be run on VM"
         multipass_manager "$@" ;;
-    configure) ansible_manager   "$@" ;;
+    ansible) ansible_manager   "$@" ;;
     *)  help ;;
 esac
 
