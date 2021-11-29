@@ -40,7 +40,8 @@ function ansible_manager() {
 sandbox commands:
 ----------------
   prepare            -> Transfer Configuration Files to Control Center
-  configure          -> Configure Control Center
+  control-center     -> Configure Control Center
+  k3s                -> Configure k3s
   status             -> Displays status - ansible ping
   run                -> Run Ansible Command
 EOF
