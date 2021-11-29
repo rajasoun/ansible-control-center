@@ -75,7 +75,8 @@ function clean_generated_config_files(){
       config/generated/pre-vm-creation/apps.list \
       config/generated/post-vm-creation/inventory \
       config/generated/post-vm-creation/ssh-config \
-      config/generated/post-vm-creation/.vault_password 
+      config/generated/post-vm-creation/.vault_password \
+      config/generated/post-vm-creation/vm.state 
 }
 
 function teardown(){
