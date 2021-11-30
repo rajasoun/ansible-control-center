@@ -14,7 +14,8 @@ locally, or in Openstack
 
 -   Add `ssl_certificate.crt` to `config/ssl-certs` directory
 -   Add `ssl_certificate_key.key` to `config/ssl-certs` directory
--   Add `.vault_password` to `config/generated/post-vm-creation` directory 
+-   Add `.vault_password` to `config/generated/post-vm-creation` directory - MMOnit License Version
+-   Add `duo.env` to `config/generated/post-vm-creation` directory for MFA support
 
 1. Prepare Configuration Files  
 
