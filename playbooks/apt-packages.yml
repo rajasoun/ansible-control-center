@@ -41,6 +41,7 @@
                 - software-properties-common
                 - ansible
                 - jq
+                - fzf
 
       - name: Install "kubectl" 
         community.general.snap:

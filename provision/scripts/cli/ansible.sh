@@ -26,6 +26,10 @@ function ansible_manager() {
     configure_mmonit
     configure_monit
     ;;
+  login)
+    vm="control-center"
+    ansible-ssh $vm
+    ;;
   status)
     echo "Querying VMs status (ansible ping)..."
     run "ansible-playbook playbooks/ping.yml"
