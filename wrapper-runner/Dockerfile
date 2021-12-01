@@ -12,8 +12,4 @@ RUN set -ex \
     &&  rm -rf /var/cache/apk/* 
 
 
-RUN set -ex \
-    &&  curl -LO https://repo-art.cisco.com/artifactory/codectl/stable/latest/codectl-linux-amd64 \
-    &&  install codectl-linux-amd64 /usr/local/bin/codectl
-
 
