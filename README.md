@@ -61,25 +61,15 @@ provision/ansible/run.sh "ansible-playbook playbooks/configure-vm.yml"
 k3s Ansible Setup
 
 ```
-multipass shell control-center
-
-ansible-playbook playbooks/k3s/prereq.yml
-ansible-playbook playbooks/k3s/setup.yml
-
-multipass exec k3s-master -- sudo cat /etc/rancher/k3s/k3s.yaml > k3s.yaml
-IP=$(multipass info "k3s-master" | grep IPv4 | awk '{print $2}')
-
-ansible-inventory  --host k3s-master | jq -r '.ansible_ssh_host'
-
-sed -i '' "s/127.0.0.1/$IP/" k3s.yaml
-export KUBECONFIG=$PWD/k3s.yaml
-
-kubectl get nodes
-kubectl label nodes k3s-worker kubernetes.io/role=worker
-
 kubectl -n kubernetes-dashboard describe secret admin-user-token | grep '^token'
 kubectl proxy
 
 Visit -> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
+```
+
+## wrapper runner 
+
+```
+./assist.sh wrapper run "bash"
 ```
