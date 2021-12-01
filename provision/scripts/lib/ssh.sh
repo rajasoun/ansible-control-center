@@ -117,7 +117,8 @@ function ansible-ssh() {
     ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
 
     vm=$(ansible-inventory --list | jq -cr --arg user $user 'to_entries | .[] | select(.value.hosts) | (.value.hosts[])' | fzf)
-    sshLoginHost="$(ansible-inventory --host $vm | jq -cr '"\(.ansible_ssh_user)@\(.ansible_ssh_host)"')"
+    ip="$(ansible-inventory --host $vm | jq -cr '"\(.ansible_ssh_host)"')"
+    sshLoginHost="$user@$ip"
 
     if [ ["$sshLoginHost" = ""] ]; then
         # ex) Ctrl-C.
@@ -126,5 +127,5 @@ function ansible-ssh() {
     fi
     echo "${GREEN} SSH as $user ${NC}"
     confirm
-    bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}" 
+    bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
 }
