@@ -112,9 +112,10 @@ function create_user_mgmt_playbook(){
 
 ### SSH to VM using ansible inventory
 function ansible-ssh() {
+    user="${3:-$ubuntu}"
     ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
     ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
-    user="ubuntu"
+
     vm=$(ansible-inventory --list | jq -cr --arg user $user 'to_entries | .[] | select(.value.hosts) | (.value.hosts[])' | fzf)
     sshLoginHost="$(ansible-inventory --host $vm | jq -cr '"\(.ansible_ssh_user)@\(.ansible_ssh_host)"')"
 
@@ -123,5 +124,7 @@ function ansible-ssh() {
         echo "${RED}$vm Not Availablee in the Inventory${NC}"
         return 1
     fi
-    bash -c "ssh  ${sshLoginHost} ${ssh_private_key}" 
+    echo "${GREEN} SSH as $user ${NC}"
+    confirm
+    bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}" 
 }

@@ -27,8 +27,7 @@ function ansible_manager() {
     configure_monit
     ;;
   login)
-    vm="control-center"
-    ansible-ssh $vm
+    ansible-ssh "$@"
     ;;
   status)
     echo "Querying VMs status (ansible ping)..."
@@ -50,6 +49,7 @@ sandbox commands:
   monitor            -> Configure Monitoring 
   k3s                -> Configure k3s
   status             -> Displays status - ansible ping
+  login              -> SSH to the VM
   run                -> Run Ansible Command
 EOF
     ;;
