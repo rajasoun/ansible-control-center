@@ -1,6 +1,6 @@
 ---
 - name: Run Duo install as part of Host configuration for User Mgmt
-  hosts: vms
+  hosts: control-center
   become: true
   become_method: sudo
 

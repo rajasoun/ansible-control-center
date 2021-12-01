@@ -133,7 +133,13 @@ function prepare_control_center(){
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
+        
+        cp "config/templates/duo.env.sample" "config/generated/post-vm-creation/duo.env"
+        echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/post-vm-creation/duo.env${NC} \n"
+        confirm
+        source "config/generated/post-vm-creation/duo.env"
         run "ansible-playbook config/generated/pre-vm-creation/user-mgmt-playbook.yml"
+        
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo ".control-center.prepare.conf=done" >> "$STATE_FILE"
     else
