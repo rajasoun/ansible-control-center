@@ -95,21 +95,6 @@ function create_ssh_config_from_template() {
     echo "${GREEN}$SSH_CONFIG_FILE Generation Done! ${NC}"
 }
 
-## Create user-mgmt-playbook.yml file from template with SSH public key
-function create_user_mgmt_playbook(){
-    local USER_MGMT_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/user-mgmt-playbook.yml"
-    local USER_MGMT_FILE="${CONFIG_PATH}/user-mgmt-playbook.yml"
-    if [ -f "$USER_MGMT_FILE" ]; then
-        echo "$USER_MGMT_FILE Exists"
-        echo "${ORANGE}Reusing Existing $USER_MGMT_FILE File${NC}"
-        return 0
-    fi
-    echo "${BOLD}Generating $USER_MGMT_FILE Config Files...${NC}"
-    cp "$USER_MGMT_TEMPLATE_FILE" "$USER_MGMT_FILE"
-    file_replace_text "_SSH_KEY_.*$" "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}".pub)" "$USER_MGMT_FILE"
-    echo "${GREEN}$USER_MGMT_FILE Generation Done! ${NC}"
-}
-
 ### SSH to VM using ansible inventory
 function ansible-ssh() {
     user="${3:-$ubuntu}"

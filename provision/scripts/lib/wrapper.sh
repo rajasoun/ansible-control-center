@@ -125,6 +125,9 @@ function configure_monit(){
 
 # Configure Control Center based on state file
 function prepare_control_center(){
+    local DUO_ENV="config/generated/post-vm-creation/duo.env"
+    local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
+
     echo "${GREEN}control-center ${NC}"
     CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.prepare.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
     # If Not Already Configured
@@ -134,11 +137,12 @@ function prepare_control_center(){
         run "ansible-playbook playbooks/control-center/prepare.yml"
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         
-        cp "config/templates/duo.env.sample" "config/generated/post-vm-creation/duo.env"
+        cp "config/templates/duo.env.sample" "$DUO_ENV"
+        file_replace_text "_SSH_KEY_.*$" "$(cat $SSH_PUBLIC_KEY)" "$DUO_ENV"
         echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/post-vm-creation/duo.env${NC} \n"
         confirm
+        
         source "config/generated/post-vm-creation/duo.env"
-        run "ansible-playbook config/generated/pre-vm-creation/user-mgmt-playbook.yml"
         
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo ".control-center.prepare.conf=done" >> "$STATE_FILE"

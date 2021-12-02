@@ -64,7 +64,6 @@ function clean_generated_config_files(){
       config/generated/pre-vm-creation/id_rsa.pub \
       config/generated/pre-vm-creation/ssh-config \
       config/generated/pre-vm-creation/cloud-init.yaml \
-      config/generated/pre-vm-creation/user-mgmt-playbook.yml \
       config/generated/pre-vm-creation/vms.sh \
       config/generated/pre-vm-creation/vms.list \
       config/generated/pre-vm-creation/apps.list \
