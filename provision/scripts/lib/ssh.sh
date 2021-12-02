@@ -97,7 +97,11 @@ function create_ssh_config_from_template() {
 
 ### SSH to VM using ansible inventory
 function ansible-ssh() {
-    user="${3:-$ubuntu}"
+    user="$3"
+    if [ -z $user ]; then
+        read -rp "ssh user: " user
+    fi 
+    
     ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
     ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
 
@@ -110,7 +114,7 @@ function ansible-ssh() {
         echo "${RED}$vm Not Availablee in the Inventory${NC}"
         return 1
     fi
-    echo "${GREEN} SSH as $user ${NC}"
+    echo "${GREEN} ssh $user@$ip ${NC}"
     confirm
     bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
 }
@@ -119,8 +123,10 @@ function ansible-ssh() {
 function ssh-login() {
     vm=$2
     user=$3
-    if [ -z $vm || -z $user ];then
-        raise_error "Parameters Not Prement: VM -> $vm | user -> $user "
+    if [[ " -z $vm " ||  "-z $user"  ]];then
+        echo -e "${RED}${BOLD}Parameters Not Prement: VM -> $vm | user -> $user ${NC}"
+        echo -e "${GREEN} Switching to Interactive Mode ${NC}"
+        ansible-ssh "$@"
     fi
 
     ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
@@ -134,7 +140,7 @@ function ssh-login() {
         echo "${RED}$vm Not Availablee in the Inventory${NC}"
         return 1
     fi
-    echo "${GREEN} SSH as $user to $vm ${NC}"
+    echo "${GREEN} ssh $user@$ip ${NC}"
     confirm
     bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
 }

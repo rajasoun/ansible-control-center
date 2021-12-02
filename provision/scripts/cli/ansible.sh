@@ -28,9 +28,6 @@ function ansible_manager() {
     configure_mmonit
     configure_monit
     ;;
-  login)
-    ansible-ssh "$@"
-    ;;
   status)
     echo "Querying VMs status (ansible ping)..."
     run "ansible-playbook playbooks/ping.yml"
@@ -51,7 +48,6 @@ sandbox commands:
   monitor            -> Configure Monitoring 
   k3s                -> Configure k3s
   status             -> Displays status - ansible ping
-  login              -> SSH to the VM
   run                -> Run Ansible Command
 EOF
     ;;
