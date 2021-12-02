@@ -46,7 +46,6 @@ function generate_pre_vm_config_files(){
   # scripts/lib/ssh.sh
   generate_ssh_key
   create_cloud_init_config_from_template
-  create_user_mgmt_playbook
 }
 
 function teardown(){
