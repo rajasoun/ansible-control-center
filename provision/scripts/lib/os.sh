@@ -159,3 +159,20 @@ function display_apps_status(){
   fi 
 }
 
+function is_connected_to_vpn(){
+    local max_secs_run="2"
+    HOST=$1
+    # shellcheck disable=SC1083
+    HTTP_STATUS="$(curl -s --max-time "${max_secs_run}" -o /dev/null -L -w ''%{http_code}'' "${HOST}")"
+    case $HTTP_STATUS in
+      200)  
+        echo "${HOST}  ✅ | Status: $HTTP_STATUS" 
+        return 0
+        ;;
+      *)    
+        echo "${HOST}  🔴 | Status: $HTTP_STATUS" 
+        return 1
+        ;;
+    esac
+}
+

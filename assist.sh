@@ -24,6 +24,7 @@ choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     local) 
         is_vm && raise_error "local can't be run on VM"
+        is_connected_to_vpn "https://wwwin.cisco.com/" && raise_error "Disconnect From VPN"
         multipass_manager "$@" ;;
     configure) ansible_manager   "$@" ;;
     wrapper) wrapper_manager   "$@" ;;
