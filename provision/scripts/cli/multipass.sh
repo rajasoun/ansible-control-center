@@ -42,9 +42,6 @@ function multipass_manager() {
     multipass list 
     display_apps_status "config/generated/pre-vm-creation/apps.list"
     ;;
-  enter)
-    shell_to_control_center
-    ;;
   *)
     cat <<-EOF
 sandbox commands:
@@ -53,7 +50,6 @@ sandbox commands:
   up                 -> spin up the multipass sandbox environment
   down               -> tear down the multipass sandbox environment
   status             -> displays status 
-  enter              -> enter the control-center
 EOF
     ;;
   esac

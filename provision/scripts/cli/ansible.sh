@@ -32,13 +32,6 @@ function ansible_manager() {
     echo "Querying VMs status (ansible ping)..."
     run "ansible-playbook playbooks/ping.yml"
     ;;
-  run)    
-    if [ ! -f "config/generated/post-vm-creation/inventory" ]; then
-        echo "Inventory File Not Availabe. Exiting..."
-        exit 1
-    fi
-    run "$3"
-    ;;
   *)
     cat <<-EOF
 sandbox commands:
@@ -48,7 +41,6 @@ sandbox commands:
   monitor            -> Configure Monitoring 
   k3s                -> Configure k3s
   status             -> Displays status - ansible ping
-  run                -> Run Ansible Command
 EOF
     ;;
   esac
