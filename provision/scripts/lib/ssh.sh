@@ -95,6 +95,18 @@ function create_ssh_config_from_template() {
     echo "${GREEN}$SSH_CONFIG_FILE Generation Done! ${NC}"
 }
 
+function ping_check(){
+    run "ansible -m ping $vm"
+    case "$?" in
+        0)
+            echo "${RED}Ping Check for $vm SUCCESSFULL ${NC}" ;;
+        1)
+            echo "${RED}Ping Check for $vm FAILED. Exiting... ${NC}" 
+            exit 1
+            ;;
+    esac
+}
+
 ### SSH to VM using ansible inventory
 function ansible-ssh() {
     user="$3"
@@ -114,6 +126,7 @@ function ansible-ssh() {
         echo "${RED}$vm Not Availablee in the Inventory${NC}"
         return 1
     fi
+    ping_check $vm
     echo "${GREEN} ssh $user@$ip ${NC}"
     confirm
     bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
@@ -123,6 +136,10 @@ function ansible-ssh() {
 function ssh-login() {
     vm=$2
     user=$3
+    if [ ! -f "config/generated/post-vm-creation/inventory" ]; then
+        echo "${RED}${BOLD}Inventory File Not Availabe. Exiting...${NC}"
+        exit 1
+    fi
     if [[ " -z $vm " ||  "-z $user"  ]];then
         echo -e "${RED}${BOLD}Parameters Not Prement: VM -> $vm | user -> $user ${NC}"
         echo -e "${GREEN} Switching to Interactive Mode ${NC}"
@@ -140,6 +157,7 @@ function ssh-login() {
         echo "${RED}$vm Not Availablee in the Inventory${NC}"
         return 1
     fi
+    ping_check $vm 
     echo "${GREEN} ssh $user@$ip ${NC}"
     confirm
     bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
