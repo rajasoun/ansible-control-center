@@ -14,6 +14,7 @@ function help(){
     echo "   local      -> Manage multipass Sandbox Environment via Multipass "
     echo "   configure  -> Ansible Based Configuration "
     echo "   wrapper    -> Wrapper for ansible,openstack and aws "
+    echo "   login      -> Login to VM"
     echo
     return 1
 }

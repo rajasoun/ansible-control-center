@@ -138,10 +138,10 @@ function prepare_control_center(){
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         
         cp "config/templates/duo.env.sample" "$DUO_ENV"
+        file_replace_text "_CEC_USER_.*$" "$(cat $SSH_PUBLIC_KEY)" "${USER}"
         file_replace_text "_SSH_KEY_.*$" "$(cat $SSH_PUBLIC_KEY)" "$DUO_ENV"
         echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/post-vm-creation/duo.env${NC} \n"
         confirm
-        
         source "config/generated/post-vm-creation/duo.env"
         
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"

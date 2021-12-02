@@ -9,6 +9,8 @@ function ansible_manager() {
       is_vm && raise_error "prepare can't run from VM"
       echo "Prepare Control Center from Local Host..."
       prepare_control_center
+      echo "Control Center is Preparation Done!"
+      echo -e "${GREEN}\nNext  SSH to Control Center -> ./assist.sh login control-center $USER \n${NC}"
       ;;
   control-center)
     ! is_vm && raise_error "configure can't run from host"

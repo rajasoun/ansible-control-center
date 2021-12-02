@@ -10,6 +10,8 @@ function multipass_manager() {
   case $action in
   prepare)
     run_prepare
+        check_for_dot_env_files
+        echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh local up  \n${NC}"
     ;;
   up)
     if [ ! -f config/generated/pre-vm-creation/vms.list ]; then
@@ -24,9 +26,10 @@ function multipass_manager() {
     create_vm_provisioning_commands
     provision_vms
     generate_post_vm_config_files
-    end=$(date +%s)
+    end=$(date +%s) 
     runtime=$((end-start))
     echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
+    echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh configure prepare  \n${NC}"
     ;;
   down)
     echo "Stopping multipass sandbox containers..."
