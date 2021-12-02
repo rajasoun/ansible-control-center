@@ -27,6 +27,7 @@ case $choice in
         multipass_manager "$@" ;;
     configure) ansible_manager   "$@" ;;
     wrapper) wrapper_manager   "$@" ;;
+    login) ssh-login "$@" ;;
     *)  help ;;
 esac
 

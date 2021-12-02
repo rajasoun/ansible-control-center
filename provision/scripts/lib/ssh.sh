@@ -114,3 +114,27 @@ function ansible-ssh() {
     confirm
     bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
 }
+
+### SSH to VM using ansible inventory
+function ssh-login() {
+    vm=$2
+    user=$3
+    if [ -z $vm || -z $user ];then
+        raise_error "Parameters Not Prement: VM -> $vm | user -> $user "
+    fi
+
+    ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
+    ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
+
+    ip="$(ansible-inventory --host $vm | jq -cr '"\(.ansible_ssh_host)"')"
+    sshLoginHost="$user@$ip"
+
+    if [ ["$sshLoginHost" = ""] ]; then
+        # ex) Ctrl-C.
+        echo "${RED}$vm Not Availablee in the Inventory${NC}"
+        return 1
+    fi
+    echo "${GREEN} SSH as $user to $vm ${NC}"
+    confirm
+    bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
+}
