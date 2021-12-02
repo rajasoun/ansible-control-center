@@ -7,6 +7,7 @@ CONFIG_TEMPLATE_PATH="config/templates"
 function exit_on_pre_condition_checks(){
   check "multipass" multipass --version 
   check "docker" docker --version 
+  check "curl" curl --version
   reportResults
 }
 

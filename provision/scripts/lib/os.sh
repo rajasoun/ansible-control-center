@@ -106,7 +106,7 @@ function reportResults() {
         echoStderr -e "\n💥  Failed tests:" "${FAILED[@]}"
         return 1
     else
-        echo -e "\n💯 - 🍻 All passed!"
+        echo -e "\n💯 - 🍻 ${BOLD}${GREEN}All passed!${NC}\n"
         return 0
     fi
 }
@@ -161,16 +161,17 @@ function display_apps_status(){
 
 function is_connected_to_vpn(){
     local max_secs_run="2"
-    HOST=$1
+    DEFAULT_HOST="https://www-github.cisco.com"
+    HOST="${1:-$DEFAULT_HOST}"
     # shellcheck disable=SC1083
-    HTTP_STATUS="$(curl -s --max-time "${max_secs_run}" -o /dev/null -L -w ''%{http_code}'' "${HOST}")"
+    HTTP_STATUS="$(curl -s --max-time "${max_secs_run}" -o /dev/null -L -w ''%{http_code}'' "${HOST}" )"
     case $HTTP_STATUS in
-      200)  
-        echo "${HOST}  ✅ | Status: $HTTP_STATUS" 
+      200 | 302 )  
+        echo "VPN - Connected 🔴 | STATUS:$HTTP_STATUS " 
         return 0
         ;;
       *)    
-        echo "${HOST}  🔴 | Status: $HTTP_STATUS" 
+        echo "VPN - Disconnected  ✅  | STATUS:$HTTP_STATUS" 
         return 1
         ;;
     esac
