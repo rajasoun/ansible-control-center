@@ -5,7 +5,7 @@ set -eo pipefail
 function ansible_manager() {
   action="$2"
   case $action in
-  prepare)
+  vms)
       is_vm && raise_error "prepare can't run from VM"
       check_vms_provision_state
       echo "Prepare All VMs..."
@@ -42,7 +42,7 @@ function ansible_manager() {
     cat <<-EOF
 sandbox commands:
 ----------------
-  prepare            -> Transfer Configuration Files to Control Center
+  vms                -> Package Upgrade and Install 
   host-mappings      -> Configure Control Center
   users              -> Configure User with MFA
   monitor            -> Configure Monitoring
