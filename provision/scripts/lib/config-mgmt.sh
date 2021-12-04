@@ -26,6 +26,40 @@ function add_confirm_config_file(){
   fi 
 }
 
+# Create cloud-init.yaml file from template with SSH public key
+function generate_cloud_init_config_from_template() {
+    local CLOUD_INIT_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/cloud-init.yaml"
+    local CLOUD_INIT_CONFIG_FILE="${CONFIG_PATH}/cloud-init.yaml"
+    if [ -f "$CLOUD_INIT_CONFIG_FILE" ]; then
+        echo "$CLOUD_INIT_CONFIG_FILE exists"
+        echo " ${ORANGE}Reusing Existing $CLOUD_INIT_CONFIG_FILE${NC} Config Files"
+        return 0
+    fi
+    echo "${BOLD}Generating $CLOUD_INIT_CONFIG_FILE Config Files...${NC}"
+    cp "$CLOUD_INIT_TEMPLATE_FILE" "$CLOUD_INIT_CONFIG_FILE"
+    file_replace_text "ssh-rsa.*$" "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}".pub)" "$CLOUD_INIT_CONFIG_FILE"
+    echo "${GREEN} $CLOUD_INIT_CONFIG_FILE Generation Done! ${NC}"
+}
+
+## Create ssh-config file from template with IP OCTET Pattern
+function generate_ssh_config_from_template() {
+    local SSH_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/ssh-config"
+    local SSH_CONFIG_FILE="${CONFIG_PATH}/ssh-config"
+    OCTET=$1
+    if [ -f "$SSH_CONFIG_FILE" ]; then
+        echo "$SSH_CONFIG_FILE exists"
+        echo "${ORANGE}Reusing Existing SSH Config Files${NC}"
+        return 0
+    fi
+    echo "${BOLD}Generating $SSH_CONFIG_FILE Config File...${NC}"
+    cp "$SSH_TEMPLATE_FILE" "$SSH_CONFIG_FILE"
+    # IP=$(multipass info "$VM_NAME" | grep IPv4 | awk '{print $2}')
+    # OCTET=$(echo $IP | awk -F '.' '{ print $1}')
+    file_replace_text "_GATEWAY_IP_.*$" "$OCTET" "$SSH_CONFIG_FILE"
+    # file_replace_text "_USER_.*$" "$SSH_USER" "$SSH_CONFIG_FILE"
+    echo "${GREEN}$SSH_CONFIG_FILE Generation Done! ${NC}"
+}
+
 # Generate & Check for Configuration Files
 function generate_pre_vm_config_files(){
 
@@ -49,9 +83,10 @@ function generate_pre_vm_config_files(){
 
   # scripts/lib/ssh.sh
   generate_ssh_key
-  create_cloud_init_config_from_template
 
-
+  # cloud-init.yaml 
+  generate_cloud_init_config_from_template
+  
   # User Mgmt 
   local duo_template_file="config/templates/duo.env.sample"
   local duo_config_file="config/generated/post-vm-creation/duo.env"
@@ -59,9 +94,7 @@ function generate_pre_vm_config_files(){
 
   local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
   file_replace_text "_CEC_USER_.*$" "${USER}" "${duo_config_file}"
-  file_replace_text "_SSH_KEY_.*$" "$(cat $SSH_PUBLIC_KEY)" "${duo_config_file}"
   source "$duo_config_file"
-
 }
 
 # Clean Configuration File

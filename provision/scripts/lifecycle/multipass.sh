@@ -42,17 +42,6 @@ function generate_vm_provisioning_command(){
   fi
 }
 
-# Generate POST VM Config script for  multipass
-function generate_post_vm_config_files(){
-  local CONFIG_PATH="config/generated/post-vm-creation"
-  local INVENTORY_PATH="$CONFIG_PATH/inventory"
-  cp $CONFIG_TEMPLATE_PATH/inventory.hosts $INVENTORY_PATH
-  IP=$(multipass info "$VM_NAME" | grep IPv4 | awk '{print $2}')
-  OCTET=$(echo $IP | awk -F '.' '{ print $1}')
-  create_ssh_config_from_template $OCTET
-  generate_inventory_file
-}
-
 # Generate Inventory File from local multipass setup
 function generate_inventory_file(){
   local CONFIG_PATH="config/generated/pre-vm-creation"
@@ -68,6 +57,17 @@ function generate_inventory_file(){
     fi
   done < $CONFIG_PATH/vms.list
   echo "${BOLD}${GREEN}Inventory $INVENTORY_PATH Gnereration Done !${NC}"
+}
+
+# Generate POST VM Config script for  multipass
+function generate_post_vm_config_files(){
+  local CONFIG_PATH="config/generated/post-vm-creation"
+  local INVENTORY_PATH="$CONFIG_PATH/inventory"
+  cp $CONFIG_TEMPLATE_PATH/inventory.hosts $INVENTORY_PATH
+  IP=$(multipass info "$VM_NAME" | grep IPv4 | awk '{print $2}')
+  OCTET=$(echo $IP | awk -F '.' '{ print $1}')
+  generate_ssh_config_from_template "${OCTET}"
+  generate_inventory_file
 }
 
 # Stop Delete Multipass VMs
