@@ -176,3 +176,8 @@ function is_connected_to_vpn(){
         ;;
     esac
 }
+
+# Pretty Table Print
+function pretty_table_print {
+    column -t -s,  "$@" | less -F -S -X -K
+}

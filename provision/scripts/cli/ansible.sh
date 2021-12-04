@@ -36,7 +36,8 @@ function ansible_manager() {
     ;;
   status)
     local state_file="config/generated/post-vm-creation/vm.state"
-    echo -e "$(cat $state_file)"
+    #echo -e "$(cat $state_file)"
+    pretty_table_print "$state_file"
     ;;
   *)
     cat <<-EOF
