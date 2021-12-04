@@ -174,7 +174,7 @@ function prepare_vms(){
         run "ansible-playbook playbooks/control-center/prepare.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo "$(date), .vms.conf=done" >> "$STATE_FILE"
-        echo -e "${GREEN}\nNext  Configure Control Center -> ./assist.sh configure control-center \n${NC}"
+        echo -e "${GREEN}\nNext  Configure Control Center -> ./assist.sh configure users \n${NC}"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .vms.conf=done ${NC}"
