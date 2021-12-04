@@ -1,5 +1,5 @@
 ---
-- name: Configure control-center
+- name: Transfer vm.state to Host
   hosts: control-center
 
   vars:
