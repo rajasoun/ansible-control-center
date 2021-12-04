@@ -60,8 +60,23 @@ function generate_ssh_config_from_template() {
     echo "${GREEN}$SSH_CONFIG_FILE Generation Done! ${NC}"
 }
 
+# Check Configuration State
+function is_configuration_done(){
+  config=$1
+  local state_file="config/generated/post-vm-creation/vm.state"
+  CONF_STATE=$(cat $state_file | grep -c $config) 
+  # If Not Already Configured
+  if [ $CONF_STATE -eq "0" ];then
+    return 1
+  else
+    return 0
+  fi
+}
+
 # Generate & Check for Configuration Files
 function generate_pre_vm_config_files(){
+  is_configuration_done ".conf.preparation=done" && 
+    raise_error "Preparation Already Done. Exiting..."
   echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
   exit_on_pre_condition_checks
 
@@ -94,6 +109,9 @@ function generate_pre_vm_config_files(){
   file_replace_text "_CEC_USER_.*$" "${USER}" "${duo_config_file}"
   source "$duo_config_file"
 
+  local state_file="config/generated/post-vm-creation/vm.state"
+  echo "$(date)" >> "$state_file"
+  echo  >> "$state_file"
   echo -e "\n - 🍻 ${BOLD}${GREEN}All DONE!${NC}\n"
 }
 

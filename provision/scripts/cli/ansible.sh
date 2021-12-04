@@ -34,8 +34,8 @@ function ansible_manager() {
     configure_monit
     ;;
   status)
-    echo "Querying VMs status (ansible ping)..."
-    run "ansible-playbook playbooks/ping.yml"
+    local state_file="config/generated/post-vm-creation/vm.state"
+    echo -e "$(cat $state_file)"
     ;;
   *)
     cat <<-EOF
@@ -45,7 +45,7 @@ sandbox commands:
   control-center     -> Configure Control Center
   monitor            -> Configure Monitoring
   k3s                -> Configure k3s
-  status             -> Displays status - ansible ping
+  status             -> Displays status of the Configuration
 EOF
     ;;
   esac

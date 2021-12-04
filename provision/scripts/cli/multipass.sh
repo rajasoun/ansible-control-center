@@ -36,6 +36,10 @@ function multipass_manager() {
   status)
     echo "Querying multipass sandbox status..."
     multipass list
+    echo ""
+    echo "Querying VMs status (ansible ping via Playbook)..."
+    run "ansible-playbook playbooks/ping.yml"
+    echo ""
     display_apps_status "config/generated/pre-vm-creation/apps.list"
     ;;
   *)
