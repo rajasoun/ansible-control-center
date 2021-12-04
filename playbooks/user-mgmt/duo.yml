@@ -34,7 +34,7 @@
       - debug: var=state_file_output.stdout
 
       - name: Source env file content
-        shell: 'env | grep duo'
+        shell: 'env'
         register: env_result_output
       - debug: var=env_result_output.stdout
 
