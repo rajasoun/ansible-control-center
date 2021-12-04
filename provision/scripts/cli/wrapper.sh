@@ -5,7 +5,7 @@ set -eo pipefail
 function wrapper_manager() {
   action="$2"
   case $action in
-  run) 
+  run)
     if [ ! -f "config/generated/post-vm-creation/inventory" ]; then
         echo "Inventory File Not Availabe. Exiting..."
         exit 1

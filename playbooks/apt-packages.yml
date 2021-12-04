@@ -1,5 +1,4 @@
 ---
-
 - hosts: vms
   become: true
   become_method: sudo
@@ -13,11 +12,11 @@
         when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
       - name: Update all packages to their latest version
         apt:
-          name: "*"
-          state: latest
+            name: '*'
+            state: latest
       - name: Remove dependencies that are no longer required
         apt:
-          autoremove: yes
+            autoremove: yes
 
 - hosts: control-center
   become: true
@@ -25,9 +24,9 @@
 
   # pre_tasks is a task which Ansible executes before executing any tasks mentioned in .yml file.
   pre_tasks:
-      - name: Add Ansible repository from PPA 
+      - name: Add Ansible repository from PPA
         ansible.builtin.apt_repository:
-          repo: ppa:ansible/ansible
+            repo: ppa:ansible/ansible
       - name: Set discovered Ansible Python interpreter.
         set_fact:
             ansible_python_interpreter: '{{ ansible_facts.python.executable }}'
@@ -43,8 +42,7 @@
                 - jq
                 - fzf
 
-      - name: Install "kubectl" 
+      - name: Install "kubectl"
         community.general.snap:
-          name: kubectl
-          classic: yes
-
+            name: kubectl
+            classic: yes

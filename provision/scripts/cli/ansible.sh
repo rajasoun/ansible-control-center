@@ -18,13 +18,13 @@ function ansible_manager() {
     echo "Configure Control Center..."
     configure_control_center
     ;;
-  k3s) 
+  k3s)
     ! is_vm && raise_error "k3s can't run on host"
     run "ansible-playbook playbooks/k3s/prereq.yml"
     run "ansible-playbook playbooks/k3s/setup.yml"
     run "ansible-playbook playbooks/k3s/post-setup.yml"
     ;;
-  monitor) 
+  monitor)
     ! is_vm && raise_error "k3s can't run on host"
     configure_mmonit
     configure_monit
@@ -39,13 +39,10 @@ sandbox commands:
 ----------------
   prepare            -> Transfer Configuration Files to Control Center
   control-center     -> Configure Control Center
-  monitor            -> Configure Monitoring 
+  monitor            -> Configure Monitoring
   k3s                -> Configure k3s
   status             -> Displays status - ansible ping
 EOF
     ;;
   esac
 }
-
-
- 

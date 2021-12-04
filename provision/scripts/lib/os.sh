@@ -118,18 +118,18 @@ function is_vm (){
       # Assume VM if OS is Linux
       return 0
       ;;
-    *) 
-      return 1 
+    *)
+      return 1
       ;;
   esac
 }
 
 function confirm() {
   local _prompt _default _response
- 
+
   if [ "$1" ]; then _prompt="$1"; else _prompt="Continue -> "; fi
   _prompt="$_prompt [y/n] ?"
- 
+
   # Loop forever until the user enters a valid response (Y/N or Yes/No).
   while true; do
     read -r -p "$_prompt " _response
@@ -156,7 +156,7 @@ function display_apps_status(){
           display_url_status $app
         fi
       done < $APPS_LIST
-  fi 
+  fi
 }
 
 function is_connected_to_vpn(){
@@ -166,14 +166,13 @@ function is_connected_to_vpn(){
     # shellcheck disable=SC1083
     HTTP_STATUS="$(curl -s --max-time "${max_secs_run}" -o /dev/null -L -w ''%{http_code}'' "${HOST}" )"
     case $HTTP_STATUS in
-      200 | 302 )  
-        echo "VPN - Connected 🔴 | STATUS:$HTTP_STATUS " 
+      200 | 302 )
+        echo "VPN - Connected 🔴 | STATUS:$HTTP_STATUS "
         return 0
         ;;
-      *)    
-        echo "VPN - Disconnected  ✅  | STATUS:$HTTP_STATUS" 
+      *)
+        echo "VPN - Disconnected  ✅  | STATUS:$HTTP_STATUS"
         return 1
         ;;
     esac
 }
-

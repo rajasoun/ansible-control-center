@@ -9,12 +9,12 @@ function check_for_dot_env_files(){
   local duo_env_file="config/generated/post-vm-creation/duo.env"
   if [ ! -f $vault_password_file ]; then
     echo -e "${RED}${BOLD} Add $vault_password_file ${NC}"
-    confirm 
-  fi 
+    confirm
+  fi
   if [ ! -f $duo_env_file ]; then
     echo -e "${RED}${BOLD} Add $duo_env_file ${NC}"
-    confirm 
-  fi 
+    confirm
+  fi
 }
 
 function generate_pre_vm_config_files(){
@@ -58,7 +58,7 @@ function provision_vms(){
     parallel < "$CONFIG_PATH/vms.sh"
   fi
   echo "${BOLD}${UNDERLINE}VMs${NC}"
-  echo "$(cat $CONFIG_PATH/vms.list)" 
+  echo "$(cat $CONFIG_PATH/vms.list)"
   echo "${BOLD}${GREEN}Provisioning Done !${NC}"
 }
 
@@ -66,7 +66,7 @@ function teardown(){
     local MLIST=$(multipass ls)
     if [[ $MLIST == *"No instances"* ]]; then
       echo "All Clean"
-    else 
+    else
       stop_delete_vms
     fi
 }
@@ -83,5 +83,5 @@ function clean_generated_config_files(){
       config/generated/post-vm-creation/inventory \
       config/generated/post-vm-creation/ssh-config \
       config/generated/post-vm-creation/vm.state \
-      config/generated/post-vm-creation/duo.env 
+      config/generated/post-vm-creation/duo.env
 }

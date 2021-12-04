@@ -17,14 +17,13 @@ locally, or in Openstack
 -   Add `.vault_password` to `config/generated/post-vm-creation` directory - MMOnit License Version
 -   Add `duo.env` to `config/generated/post-vm-creation` directory for MFA support
 
-1. Prepare Configuration Files  
+1. Prepare Configuration Files
 
 ```
 ./assist.sh local prepare
 ```
 
 2. Edit `config/generated/pre-vm-creation/vms.list` to match the needs
-
 
 3. Proivision VMs
 
@@ -68,7 +67,7 @@ Visit -> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/h
 
 ```
 
-## wrapper runner 
+## wrapper runner
 
 ```
 ./assist.sh wrapper run "bash"

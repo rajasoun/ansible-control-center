@@ -17,7 +17,7 @@ function multipass_manager() {
     if [ ! -f config/generated/pre-vm-creation/vms.list ]; then
       run_prepare
       confirm
-    fi 
+    fi
     start=$(date +%s)
     echo "Spinning up multipass sandbox environment..."
     echo "If this is your first time starting sandbox this might take a minute..."
@@ -26,7 +26,7 @@ function multipass_manager() {
     create_vm_provisioning_commands
     provision_vms
     generate_post_vm_config_files
-    end=$(date +%s) 
+    end=$(date +%s)
     runtime=$((end-start))
     echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
     echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh configure prepare  \n${NC}"
@@ -39,7 +39,7 @@ function multipass_manager() {
     ;;
   status)
     echo "Querying multipass sandbox status..."
-    multipass list 
+    multipass list
     display_apps_status "config/generated/pre-vm-creation/apps.list"
     ;;
   *)
@@ -49,11 +49,8 @@ sandbox commands:
   prepare            -> Prerequsites Check & Config Preparation
   up                 -> spin up the multipass sandbox environment
   down               -> tear down the multipass sandbox environment
-  status             -> displays status 
+  status             -> displays status
 EOF
     ;;
   esac
 }
-
-
- 

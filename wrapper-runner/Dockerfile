@@ -9,7 +9,4 @@ RUN set -ex \
     && apk del gcc musl-dev linux-headers libffi-dev \
     &&  rm -rf /tmp/* \
     &&  rm -rf /var/tmp/* \
-    &&  rm -rf /var/cache/apk/* 
-
-
-
+    &&  rm -rf /var/cache/apk/*

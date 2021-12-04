@@ -22,7 +22,7 @@ function help(){
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
-    local) 
+    local)
         is_vm && raise_error "local can't be run on VM"
         is_connected_to_vpn  && raise_error "Disconnect From VPN.Exiting..."
         multipass_manager "$@" ;;
@@ -31,4 +31,3 @@ case $choice in
     login) ssh-login "$@" ;;
     *)  help ;;
 esac
-

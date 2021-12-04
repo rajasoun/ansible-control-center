@@ -24,24 +24,24 @@ function generate_ssh_key() {
 
 ## Check SSH Private Key File Exists
 function check_ssh_private_key_exists() {
-    if [ ! -f "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}")" ];then 
-       echo "${BOLD}${RED} SSH Private Key File $SSH_KEY_PATH/${SSH_KEY}.pub Not Exist${NC}" 
+    if [ ! -f "$(cat "$SSH_KEY_PATH"/"${SSH_KEY}")" ];then
+       echo "${BOLD}${RED} SSH Private Key File $SSH_KEY_PATH/${SSH_KEY}.pub Not Exist${NC}"
        return 1
-    fi 
+    fi
 }
 
 ## Generate SSH Public Key from Private Key File
 function generate_ssh_public_key_from_private_key(){
     if [ check_ssh_private_key_exists ]; then
-        if [ -f "$(cat $SSH_KEY_PATH/${SSH_KEY})" ];then 
+        if [ -f "$(cat $SSH_KEY_PATH/${SSH_KEY})" ];then
             PUBLIC_KEY_FROM_PRIVATE_KEY="$(ssh-keygen -y -f $SSH_KEY_PATH/${SSH_KEY})"
             echo $PUBLIC_KEY_FROM_PRIVATE_KEY > "$SSH_KEY_PATH/${SSH_KEY}.pub"
             return 0
         else
-            echo "${BOLD}${RED} SSH Private Key $SSH_KEY_PATH File Not Exist. Exiting... ${NC}" 
+            echo "${BOLD}${RED} SSH Private Key $SSH_KEY_PATH File Not Exist. Exiting... ${NC}"
             return 1
         fi
-    fi 
+    fi
 }
 
 ## Check SSH Public Key File matches with Private Key File
@@ -56,8 +56,8 @@ function check_ssh_public_private_key_pair(){
         else
             echo "${BOLD}${RED} SSH Public Private Key Pair Does Not Matche ${NC}"
             return 1
-        fi 
-    fi 
+        fi
+    fi
 }
 
 ## Create cloud-init.yaml file from template with SSH public key
@@ -80,7 +80,7 @@ function create_cloud_init_config_from_template() {
 function create_ssh_config_from_template() {
     local SSH_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/ssh-config"
     local SSH_CONFIG_FILE="${CONFIG_PATH}/ssh-config"
-    OCTET=$1 
+    OCTET=$1
     if [ -f "$SSH_CONFIG_FILE" ]; then
         echo "$SSH_CONFIG_FILE exists"
         echo "${ORANGE}Reusing Existing SSH Config Files${NC}"
@@ -101,7 +101,7 @@ function ping_check(){
         0)
             echo "${GREEN}Ping Check for $vm SUCCESSFULL ${NC}" ;;
         1)
-            echo "${RED}Ping Check for $vm FAILED. Exiting... ${NC}" 
+            echo "${RED}Ping Check for $vm FAILED. Exiting... ${NC}"
             exit 1
             ;;
     esac
@@ -112,8 +112,8 @@ function ansible-ssh() {
     user="$3"
     if [ -z $user ]; then
         read -rp "ssh user: " user
-    fi 
-    
+    fi
+
     ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
     ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
 
@@ -157,7 +157,7 @@ function ssh-login() {
         echo "${RED}$vm Not Availablee in the Inventory${NC}"
         return 1
     fi
-    ping_check $vm 
+    ping_check $vm
     echo "${GREEN} ssh $user@$ip ${NC}"
     confirm
     bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"

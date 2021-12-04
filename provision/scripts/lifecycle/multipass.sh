@@ -5,8 +5,8 @@ set -eo pipefail
 CONFIG_TEMPLATE_PATH="config/templates"
 
 function exit_on_pre_condition_checks(){
-  check "multipass" multipass --version 
-  check "docker" docker --version 
+  check "multipass" multipass --version
+  check "docker" docker --version
   check "curl" curl --version
   reportResults
 }
@@ -45,7 +45,7 @@ function generate_inventory_file(){
     if [[ ! -z $vm ]]
     then
       GROUP_VARS="ansible_ssh_user=$USER ansible_ssh_private_key_file=/home/$USER/.ssh/id_rsa"
-      INVENTORY="$(multipass list | grep $vm | grep Running | awk '{print $1 " ansible_ssh_host="$3}')" 
+      INVENTORY="$(multipass list | grep $vm | grep Running | awk '{print $1 " ansible_ssh_host="$3}')"
       echo "$INVENTORY $GROUP_VARS" >> $INVENTORY_PATH
     fi
   done < $CONFIG_PATH/vms.list
@@ -54,10 +54,10 @@ function generate_inventory_file(){
 
 function shell_to_control_center(){
   VM="control-center"
-  if [ $(multipass list | grep Running | grep -c control-center) -eq "1" ]; then 
+  if [ $(multipass list | grep Running | grep -c control-center) -eq "1" ]; then
     multipass shell $VM
   else
-    echo "${RED}${BOLD} VM $VM Not Abailable ${NC}" 
+    echo "${RED}${BOLD} VM $VM Not Abailable ${NC}"
   fi
 }
 
@@ -72,12 +72,8 @@ function stop_delete_vms(){
           multipass stop $vm || echo "$vm Already Stopped"
           multipass delete $vm || echo "$vm Already Deleted"
           echo "${BOLD}${GREEN}Cleaning $vm Done! ${NC}"
-        fi 
+        fi
     fi
   done < $CONFIG_PATH/vms.list
   multipass purge
 }
-
-
-
-

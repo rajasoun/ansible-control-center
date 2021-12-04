@@ -14,5 +14,4 @@ ssh-config
 vm.state
 
 # k3s config
-k3s.yaml 
-
+k3s.yaml

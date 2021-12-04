@@ -2,5 +2,5 @@
 - hosts: vms
 
   tasks:
-    - name: Ping all Hosts
-      ansible.builtin.ping:
+      - name: Ping all Hosts
+        ansible.builtin.ping:

@@ -1,4 +1,4 @@
-### Graph View Commands 
+### Graph View Commands
 # ansible-inventory --graph
 
 [local]
@@ -17,4 +17,3 @@ node
 
 ### List of VMS ###
 [vms]
-

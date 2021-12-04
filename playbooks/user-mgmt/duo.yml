@@ -4,41 +4,41 @@
   become_method: sudo
 
   vars:
-    duo_env_path: "ansible-control-center/config/generated/post-vm-creation/duo.env"
-    duo_ikey: "{{ lookup('env','duo_ikey') }}"
-    duo_skey: "{{ lookup('env','duo_skey') }}"
-    duo_api_host: "{{ lookup('env','duo_api_host') }}"
-    duo_pam_groups: ["deployer","sudo"]
-    duo_pam_prompts: 3
-    add_user_groups_list:
-        - name: deployer
+      duo_env_path: 'ansible-control-center/config/generated/post-vm-creation/duo.env'
+      duo_ikey: "{{ lookup('env','duo_ikey') }}"
+      duo_skey: "{{ lookup('env','duo_skey') }}"
+      duo_api_host: "{{ lookup('env','duo_api_host') }}"
+      duo_pam_groups: ['deployer', 'sudo']
+      duo_pam_prompts: 3
+      add_user_groups_list:
+          - name: deployer
 
   pre_tasks:
       - name: Find Playbook Path
-        shell: "ls ansible-control-center/config/generated/pre-vm-creation/"
+        shell: 'ls ansible-control-center/config/generated/pre-vm-creation/'
         register: playbook_path_output
 
       - debug: var=playbook_path_output.stdout
 
       - name: Get env file content
-        shell: "source {{ duo_env_path }}"
+        shell: 'source {{ duo_env_path }}'
         register: env_file_result
 
       - name: Parse environment
         set_fact:
-          env_vars: "{{ ('{' + env_file_result.stdout_lines | map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
+            env_vars: "{{ ('{' + env_file_result.stdout_lines | map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
 
       - name: Display environment variables
         command: env
-        environment: "{{ env_vars }}"
+        environment: '{{ env_vars }}'
 
       - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
         template:
-          src: vars/users.j2
-          dest: vars/users.yml
-          owner: root
-          group: root
-          mode: 0644
+            src: vars/users.j2
+            dest: vars/users.yml
+            owner: root
+            group: root
+            mode: 0644
 
   roles:
       - role: ansible-users

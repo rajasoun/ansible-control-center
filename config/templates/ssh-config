@@ -7,4 +7,3 @@ Host k3s-* control-* mmonit observability edge-router
     User ubuntu
     Port 22
     IdentityFile /home/ubuntu/.ssh/id_rsa
-

@@ -85,7 +85,7 @@ function configure_control_center(){
 
 # Configure MMonit
 function configure_mmonit(){
-    local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks  
+    local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks
     local MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
 
     echo "${GREEN}mmonit - configuration${NC}"
@@ -107,7 +107,7 @@ function configure_mmonit(){
 
 # Configure Monit
 function configure_monit(){
-    local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks  
+    local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks
 
     echo "${GREEN}monit - configuration${NC}"
     CONF_STATE=$(cat $STATE_FILE | grep -c .monit-agent.conf=done) || echo "${RED}monit Conf State is Empty${NC}"
@@ -136,20 +136,17 @@ function prepare_control_center(){
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
-        
+
         cp "config/templates/duo.env.sample" "$DUO_ENV"
         file_replace_text "_CEC_USER_.*$" "$(cat $SSH_PUBLIC_KEY)" "${USER}"
         file_replace_text "_SSH_KEY_.*$" "$(cat $SSH_PUBLIC_KEY)" "$DUO_ENV"
         echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/post-vm-creation/duo.env${NC} \n"
         confirm
         source "config/generated/post-vm-creation/duo.env"
-        
+
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo ".control-center.prepare.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
     fi
 }
-
-
-
