@@ -7,13 +7,15 @@ CONFIG_TEMPLATE_PATH="config/templates"
 function check_for_dot_env_files(){
   local vault_password_file="config/generated/post-vm-creation/.vault_password"
   local duo_env_file="config/generated/post-vm-creation/duo.env"
-  if [ ! -f $vault_password_file ]; then
-    echo -e " ${BLUE}${BOLD}Add $vault_password_file ${NC} for MMonit\n"
-    confirm 
-  fi 
+
   if [ ! -f $duo_env_file ]; then
     cp "config/templates/duo.env.sample" "$duo_env_file"
     echo -e " ${BOLD}${BLUE}Edit ${UNDERLINE}$duo_env_file ${NC}\n"
+    confirm 
+  fi 
+
+  if [ ! -f $vault_password_file ]; then
+    echo -e " ${BLUE}${BOLD}Add $vault_password_file ${NC} for MMonit\n"
     confirm 
   fi 
 }
