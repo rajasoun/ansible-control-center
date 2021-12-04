@@ -36,6 +36,6 @@
             group: root
             mode: 0644
 
-  # roles:
-  #     - role: ansible-users
-  #     - role: ansible-duo_install
+  roles:
+      - role: ansible-users
+      - role: ansible-duo_install
