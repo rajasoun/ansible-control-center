@@ -32,9 +32,7 @@
         set_fact:
             env_vars: "{{ ('{' + env_file_result.stdout_lines | map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
 
-      - name: Display environment variables
-        command: env
-        environment: '{{ env_vars }}'
+      - debug: var=env_vars.stdout
 
       - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
         template:
