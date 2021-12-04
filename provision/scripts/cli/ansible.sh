@@ -17,6 +17,7 @@ function ansible_manager() {
     configure_control_center
     ;;
   users)
+    is_vm && raise_error "user configuration can't run on host"
     echo "Configure Users..."
     configure_users
     echo -e "${GREEN}\nNext  SSH to Control Center -> ./assist.sh login control-center $USER \n${NC}"
