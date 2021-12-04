@@ -28,8 +28,8 @@ function add_confirm_config_file(){
 
 # Create cloud-init.yaml file from template with SSH public key
 function generate_cloud_init_config_from_template() {
-    local CLOUD_INIT_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/cloud-init.yaml"
-    local CLOUD_INIT_CONFIG_FILE="${CONFIG_PATH}/cloud-init.yaml"
+    local CLOUD_INIT_TEMPLATE_FILE="config/templates/cloud-init.yaml"
+    local CLOUD_INIT_CONFIG_FILE="config/generated/pre-vm-creation/cloud-init.yaml"
     if [ -f "$CLOUD_INIT_CONFIG_FILE" ]; then
         echo "$CLOUD_INIT_CONFIG_FILE exists"
         echo " ${ORANGE}Reusing Existing $CLOUD_INIT_CONFIG_FILE${NC} Config Files"
@@ -43,8 +43,8 @@ function generate_cloud_init_config_from_template() {
 
 ## Create ssh-config file from template with IP OCTET Pattern
 function generate_ssh_config_from_template() {
-    local SSH_TEMPLATE_FILE="${CONFIG_TEMPLATE_PATH}/ssh-config"
-    local SSH_CONFIG_FILE="${CONFIG_PATH}/ssh-config"
+    local SSH_TEMPLATE_FILE="config/templates/ssh-config"
+    local SSH_CONFIG_FILE="config/generated/pre-vm-creation/ssh-config"
     OCTET=$1
     if [ -f "$SSH_CONFIG_FILE" ]; then
         echo "$SSH_CONFIG_FILE exists"
@@ -72,8 +72,8 @@ function generate_pre_vm_config_files(){
   generate_confirm_config_file "$vms_list_template_file" "$vms_list_config_file"
 
   # Apps
-  local apps_list_template_file="config/templates/vms.list"
-  local apps_list_config_file="config/generated/pre-vm-creation/vms.list"
+  local apps_list_template_file="config/templates/apps.list"
+  local apps_list_config_file="config/generated/pre-vm-creation/apps.list"
   generate_confirm_config_file "$apps_list_template_file" "$apps_list_config_file"
 
   # Add .vault_password file for MMonit
