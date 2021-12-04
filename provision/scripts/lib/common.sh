@@ -5,9 +5,14 @@ set -eo pipefail
 CONFIG_TEMPLATE_PATH="config/templates"
 
 function check_for_dot_env_files(){
-  local vault_password_file="config/generated/pre-vm-creation/.vault_password"
+  local vault_password_file="config/generated/post-vm-creation/.vault_password"
+  local duo_env_file="config/generated/post-vm-creation/duo.env"
   if [ ! -f $vault_password_file ]; then
     echo -e "${RED}${BOLD} Add $vault_password_file ${NC}"
+    confirm 
+  fi 
+  if [ ! -f $duo_env_file ]; then
+    echo -e "${RED}${BOLD} Add $duo_env_file ${NC}"
     confirm 
   fi 
 }

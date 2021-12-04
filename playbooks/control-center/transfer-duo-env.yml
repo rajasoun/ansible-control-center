@@ -9,5 +9,5 @@
       - name: Copy Generated duo.env playbbok to Host
         tags: duo_env_transfer
         ansible.builtin.copy:
-            src: '../../config/generated/pre-vm-creation/duo.env'
-            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/pre-vm-creation/duo.env'
+            src: '../../config/generated/post-vm-creation/duo.env'
+            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/post-vm-creation/duo.env'
