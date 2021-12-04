@@ -99,7 +99,7 @@ function ping_check(){
     run "ansible -m ping $vm"
     case "$?" in
         0)
-            echo "${RED}Ping Check for $vm SUCCESSFULL ${NC}" ;;
+            echo "${GREEN}Ping Check for $vm SUCCESSFULL ${NC}" ;;
         1)
             echo "${RED}Ping Check for $vm FAILED. Exiting... ${NC}" 
             exit 1
