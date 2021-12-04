@@ -9,22 +9,18 @@ function multipass_manager() {
   action="$2"
   case $action in
   prepare)
-    run_prepare
-        check_for_dot_env_files
-        echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh local up  \n${NC}"
+    generate_pre_vm_config_files 
+    echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh local up  \n${NC}"
     ;;
   up)
     if [ ! -f config/generated/pre-vm-creation/vms.list ]; then
-      run_prepare
-      confirm
+      generate_pre_vm_config_files
     fi
     start=$(date +%s)
     echo "Spinning up multipass sandbox environment..."
     echo "If this is your first time starting sandbox this might take a minute..."
-    # add_host_entries
-    # generate_pre_vm_config_files
-    create_vm_provisioning_commands
-    provision_vms
+    generate_vm_provisioning_scipts
+    provision_vms_from_script
     generate_post_vm_config_files
     end=$(date +%s)
     runtime=$((end-start))
@@ -34,7 +30,7 @@ function multipass_manager() {
   down)
     echo "Stopping multipass sandbox containers..."
     # remove_host_entries
-    teardown
+    teardown_multipass_setup
     clean_generated_config_files
     ;;
   status)

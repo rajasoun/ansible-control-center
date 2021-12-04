@@ -67,7 +67,7 @@ function create_cloud_init_config_from_template() {
 
     if [ -f "$CLOUD_INIT_CONFIG_FILE" ]; then
         echo "$CLOUD_INIT_CONFIG_FILE exists"
-        echo "${ORANGE}Reusing Existing $CLOUD_INIT_CONFIG_FILE Config Files${NC}"
+        echo " ${ORANGE}Reusing Existing $CLOUD_INIT_CONFIG_FILE${NC} Config Files"
         return 0
     fi
     echo "${BOLD}Generating $CLOUD_INIT_CONFIG_FILE Config Files...${NC}"

@@ -7,7 +7,7 @@ function ansible_manager() {
   case $action in
   prepare)
       is_vm && raise_error "prepare can't run from VM"
-      check_for_dot_env_files
+      check_for_config_files
       echo "Prepare Control Center from Local Host..."
       prepare_control_center
       echo "Control Center is Preparation Done!"

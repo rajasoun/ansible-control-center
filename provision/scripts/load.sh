@@ -11,8 +11,10 @@ source "$SCRIPT_DIR/lib/ssh.sh"
 source "$SCRIPT_DIR/lib/etc_hosts.sh"
 # shellcheck source=scripts/lib/wrapper.sh
 source "$SCRIPT_DIR/lib/wrapper.sh"
-# shellcheck source=scripts/lib/common.sh
-source "$SCRIPT_DIR/lib/common.sh"
+# shellcheck source=scripts/lib/config-mgmt.sh
+source "$SCRIPT_DIR/lib/config-mgmt.sh"
+# shellcheck source=scripts/lib/provision.sh
+source "$SCRIPT_DIR/lib/provision.sh"
 
 ### CLI - UI ####
 # shellcheck source=scripts/cli/multipass.sh"

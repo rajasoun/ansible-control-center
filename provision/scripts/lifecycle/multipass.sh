@@ -4,6 +4,7 @@ set -eo pipefail
 
 CONFIG_TEMPLATE_PATH="config/templates"
 
+# Exit if Precondition Checks Fails for local setup
 function exit_on_pre_condition_checks(){
   check "multipass" multipass --version
   check "docker" docker --version
@@ -11,6 +12,21 @@ function exit_on_pre_condition_checks(){
   reportResults
 }
 
+# Generate VM Provisioning Script from vms.list
+function generate_vm_provisioning_scipts(){
+  local CONFIG_PATH="config/generated/pre-vm-creation"
+  echo "echo "" " > "$CONFIG_PATH/vms.sh"
+  while read -r vm
+  do
+    if [[ ! -z $vm  ]]
+    then
+      generate_vm_provisioning_command $vm
+    fi
+  done < $CONFIG_PATH/vms.list
+  echo "${GREEN}Provisioning $CONFIG_PATH/vms.sh Done !${NC}"
+}
+
+# Generate VM Provisioning command from multipass
 function generate_vm_provisioning_command(){
   local CPU=${CPU:-"2"}
   local MEMORY=${MEMORY:-"2G"}
@@ -26,6 +42,7 @@ function generate_vm_provisioning_command(){
   fi
 }
 
+# Generate POST VM Config script for  multipass
 function generate_post_vm_config_files(){
   local CONFIG_PATH="config/generated/post-vm-creation"
   local INVENTORY_PATH="$CONFIG_PATH/inventory"
@@ -36,6 +53,7 @@ function generate_post_vm_config_files(){
   generate_inventory_file
 }
 
+# Generate Inventory File from local multipass setup
 function generate_inventory_file(){
   local CONFIG_PATH="config/generated/pre-vm-creation"
   local INVENTORY_PATH="config/generated/post-vm-creation/inventory"
@@ -52,16 +70,8 @@ function generate_inventory_file(){
   echo "${BOLD}${GREEN}Inventory $INVENTORY_PATH Gnereration Done !${NC}"
 }
 
-function shell_to_control_center(){
-  VM="control-center"
-  if [ $(multipass list | grep Running | grep -c control-center) -eq "1" ]; then
-    multipass shell $VM
-  else
-    echo "${RED}${BOLD} VM $VM Not Abailable ${NC}"
-  fi
-}
-
-function stop_delete_vms(){
+# Stop Delete Multipass VMs
+function stop_delete_multipass_vms(){
   local CONFIG_PATH="config/generated/pre-vm-creation"
   while read -r vm
   do
@@ -76,4 +86,14 @@ function stop_delete_vms(){
     fi
   done < $CONFIG_PATH/vms.list
   multipass purge
+}
+
+# Tear Down Setup
+function teardown_multipass_setup(){
+    local MLIST=$(multipass ls)
+    if [[ $MLIST == *"No instances"* ]]; then
+      echo "All Clean"
+    else 
+      stop_delete_multipass_vms
+    fi
 }
