@@ -62,7 +62,7 @@ function generate_ssh_config_from_template() {
 
 # Generate & Check for Configuration Files
 function generate_pre_vm_config_files(){
-
+  echo -e "${BOLD}${UNDERLINE}\nChecking for Prerequisites Configuration Files \n${NC}"
   echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
   exit_on_pre_condition_checks
 
@@ -77,7 +77,6 @@ function generate_pre_vm_config_files(){
   generate_confirm_config_file "$apps_list_template_file" "$apps_list_config_file"
 
   # Add .vault_password file for MMonit
-  echo -e "${BOLD}${UNDERLINE}Checking for Prerequisites Configuration Files ${NC}"
   local vault_password_file="config/generated/post-vm-creation/.vault_password"
   add_confirm_config_file "$vault_password_file"
 
