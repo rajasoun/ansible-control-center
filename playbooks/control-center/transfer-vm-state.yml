@@ -9,5 +9,5 @@
       - name: Transfer vm.state to Host
         tags: vm_state_transfer
         ansible.builtin.copy:
-            src: '../../config/generated/post-vm-creation/duo.env'
-            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/post-vm-creation/duo.env'
+            src: '../../config/generated/post-vm-creation/vm.state'
+            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/post-vm-creation/vm.state'
