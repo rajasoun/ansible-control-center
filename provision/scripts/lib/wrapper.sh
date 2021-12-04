@@ -154,6 +154,7 @@ function configure_users(){
         echo "$(date), .users.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping users Configuration ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .users.conf=done ${NC}"
     fi
 }
 
