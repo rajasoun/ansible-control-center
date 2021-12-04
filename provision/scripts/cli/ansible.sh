@@ -11,7 +11,7 @@ function ansible_manager() {
       echo "Prepare Control Center from Local Host..."
       prepare_control_center
       echo "Control Center is Preparation Done!"
-      echo -e "${GREEN}\nNext  SSH to Control Center -> ./assist.sh login control-center $USER \n${NC}"
+      echo -e "${GREEN}\nNext  Configure Users -> ./assist.sh configure users \n${NC}"
       ;;
   control-center)
     #! is_vm && raise_error "configure can't run from host"
@@ -21,6 +21,7 @@ function ansible_manager() {
   users)
     echo "Configure Users..."
     configure_users
+    echo -e "${GREEN}\nNext  SSH to Control Center -> ./assist.sh login control-center $USER \n${NC}"
     ;;
   k3s)
     ! is_vm && raise_error "k3s can't run on host"

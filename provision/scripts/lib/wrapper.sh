@@ -94,6 +94,7 @@ function configure_control_center(){
         echo "$(date), .control-center.configure.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .control-center.configure.conf=done ${NC}"
     fi
 }
 
@@ -116,6 +117,7 @@ function configure_mmonit(){
         echo "$(date), .mmonit.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping mmonit Configuration ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .mmonit.conf=done ${NC}"
     fi
 }
 
@@ -134,6 +136,7 @@ function configure_monit(){
         echo "$(date), .monit-agent.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping monit Configuration ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .monit-agent.conf=done ${NC}"
     fi
 }
 
@@ -173,5 +176,6 @@ function prepare_control_center(){
         echo "$(date), .control-center.prepare.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .control-center.prepare.conf=done ${NC}"
     fi
 }
