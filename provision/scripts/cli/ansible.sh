@@ -14,7 +14,7 @@ function ansible_manager() {
       echo -e "${GREEN}\nNext  SSH to Control Center -> ./assist.sh login control-center $USER \n${NC}"
       ;;
   control-center)
-    ! is_vm && raise_error "configure can't run from host"
+    #! is_vm && raise_error "configure can't run from host"
     echo "Configure Control Center..."
     configure_control_center
     ;;

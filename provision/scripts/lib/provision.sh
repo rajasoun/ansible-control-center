@@ -13,6 +13,6 @@ function provision_vms_from_script(){
     parallel < "$CONFIG_PATH/vms.sh"
   fi
   local state_file="config/generated/post-vm-creation/vm.state"
-  echo ".vms.provision=done" >> "$state_file"
+  ! is_configuration_done ".conf.preparation=done" || echo "$(date), .vms.provision=done" >> "$state_file"
   echo -e "\n${BOLD}${GREEN}Provisioning Done !\n${NC}"
 }

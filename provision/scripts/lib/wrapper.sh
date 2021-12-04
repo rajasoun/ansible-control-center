@@ -91,7 +91,7 @@ function configure_control_center(){
         run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
         run "ansible-playbook playbooks/control-center/etc.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
-        echo ".control-center.configure.conf=done" >> "$STATE_FILE"
+        echo "$(date), .control-center.configure.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
     fi
@@ -113,7 +113,7 @@ function configure_mmonit(){
         echo "${GREEN}MMonit Installation & Configuration Done!${NC}"
         run "ansible-vault encrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "MMonit License Encryption Done"
-        echo ".mmonit.conf=done" >> "$STATE_FILE"
+        echo "$(date), .mmonit.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping mmonit Configuration ${NC}"
     fi
@@ -131,7 +131,7 @@ function configure_monit(){
         # Install & Configure Monit
         run "ansible-playbook $PLAYBOOK_HOME/monit.yml"
         echo "${GREEN}Monit Installation & Configuration Done!${NC}"
-        echo ".monit-agent.conf=done" >> "$STATE_FILE"
+        echo "$(date), .monit-agent.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping monit Configuration ${NC}"
     fi
@@ -151,7 +151,7 @@ function configure_users(){
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         run "ansible-playbook $PLAYBOOK_HOME/duo.yml"
         echo "${GREEN}Users Configuration Done!${NC}"
-        echo ".users.conf=done" >> "$STATE_FILE"
+        echo "$(date), .users.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping users Configuration ${NC}"
     fi
@@ -169,7 +169,7 @@ function prepare_control_center(){
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
-        echo ".control-center.prepare.conf=done" >> "$STATE_FILE"
+        echo "$(date), .control-center.prepare.conf=done" >> "$STATE_FILE"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
     fi
