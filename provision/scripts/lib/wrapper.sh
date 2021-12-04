@@ -91,7 +91,6 @@ function configure_etc_host_mappings(){
         run "ansible-playbook playbooks/control-center/etc.yml"
         echo "${BOLD}${GREEN}Host Mappings Configuration Done!${NC}"
         log_state ".etc.hosts.mappings.conf=done"
-        echo -e "${GREEN}\nNext  Configure Users -> ./assist.sh configure users \n${NC}"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .etc.hosts.mappings.conf=done ${NC}"
