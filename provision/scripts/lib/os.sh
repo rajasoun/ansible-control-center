@@ -187,4 +187,5 @@ function log_state(){
   config_item=$1
   timestamp=$(date +"%m-%d-%Y %r")
   is_configuration_done "$config_item" || echo "$timestamp, $config_item" >> "$state_file"
+  run "ansible-playbook playbooks/control-center/transfer-vm-state.yml"
 }
