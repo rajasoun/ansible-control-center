@@ -17,6 +17,16 @@ function check_for_dot_env_files(){
   fi 
 }
 
+function generate_pre_vm_config_files(){
+  local CONFIG_PATH="config/generated/pre-vm-creation"
+  cp $CONFIG_TEMPLATE_PATH/vms.list $CONFIG_PATH/vms.list
+  cp $CONFIG_TEMPLATE_PATH/apps.list $CONFIG_PATH/apps.list
+  # scripts/lib/ssh.sh
+  generate_ssh_key
+  create_cloud_init_config_from_template
+}
+
+
 function run_prepare(){
     echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
     exit_on_pre_condition_checks
@@ -50,15 +60,6 @@ function provision_vms(){
   echo "${BOLD}${UNDERLINE}VMs${NC}"
   echo "$(cat $CONFIG_PATH/vms.list)" 
   echo "${BOLD}${GREEN}Provisioning Done !${NC}"
-}
-
-function generate_pre_vm_config_files(){
-  local CONFIG_PATH="config/generated/pre-vm-creation"
-  cp $CONFIG_TEMPLATE_PATH/vms.list $CONFIG_PATH/vms.list
-  cp $CONFIG_TEMPLATE_PATH/apps.list $CONFIG_PATH/apps.list
-  # scripts/lib/ssh.sh
-  generate_ssh_key
-  create_cloud_init_config_from_template
 }
 
 function teardown(){
