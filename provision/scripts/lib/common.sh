@@ -12,7 +12,8 @@ function check_for_dot_env_files(){
     confirm 
   fi 
   if [ ! -f $duo_env_file ]; then
-    echo -e " ${BOLD}${BLUE}${UNDERLINE}Edit $duo_env_file ${NC}\n"
+    cp "config/templates/duo.env.sample" "$duo_env_file"
+    echo -e " ${BOLD}${BLUE}Edit ${UNDERLINE}$duo_env_file ${NC}\n"
     confirm 
   fi 
 }
