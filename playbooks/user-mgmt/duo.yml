@@ -31,13 +31,7 @@
       - name: Display State File
         shell: 'cat {{ state_file }} '
         register: state_file_output
-
       - debug: var=state_file_output.stdout
-
-      - name: Source env file content
-        shell: '. ./{{ duo_env_path }} && env'
-        register: env_result_output
-      - debug: var=env_result_output.stdout
 
   roles:
       - role: ansible-users

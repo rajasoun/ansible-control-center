@@ -149,7 +149,7 @@ function configure_users(){
         echo "${GREEN} Configuring Users ${NC}"
         # Configure Users
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
-        run "ansible-playbook playbooks/user-mgmt/duo.yml"
+        run "source config/generated/post-vm-creation/duo.env && ansible-playbook playbooks/user-mgmt/duo.yml"
         echo "${GREEN}Users Configuration Done!${NC}"
         echo "$(date), .users.conf=done" >> "$STATE_FILE"
     else
