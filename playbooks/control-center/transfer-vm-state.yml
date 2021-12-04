@@ -1,0 +1,13 @@
+---
+- name: Configure control-center
+  hosts: control-center
+
+  vars:
+      USER_HOME: '/home/ubuntu'
+
+  tasks:
+      - name: Transfer vm.state to Host
+        tags: vm_state_transfer
+        ansible.builtin.copy:
+            src: '../../config/generated/post-vm-creation/duo.env'
+            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/post-vm-creation/duo.env'
