@@ -114,7 +114,7 @@ function generate_pre_vm_config_files(){
   source "$duo_config_file"
 
   local state_file="config/generated/post-vm-creation/vm.state"
-  echo  "$(now), .conf.preparation=done">> "$state_file"
+  log_state ".conf.preparation=done"
   echo -e "\n - 🍻 ${BOLD}${GREEN}All DONE!${NC}\n"
 }
 

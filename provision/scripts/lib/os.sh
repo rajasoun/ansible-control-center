@@ -182,8 +182,8 @@ function pretty_table_print {
     column -t -s,  "$@" | less -F -S -X -K
 }
 
-# Current Time 
-function now {
-  NOW=$(now)
-  echo ${NOW}
+function log_state(){
+  config_item=$1
+  timestamp=$(date +"%m-%d-%Y %r")
+  ! is_configuration_done "$config_item" || echo "$timestamp, $config_item" >> "$state_file"
 }

@@ -90,7 +90,7 @@ function configure_etc_host_mappings(){
         echo "${GREEN} Configuring Host Mappings in /etc/hosts ${NC}"
         run "ansible-playbook playbooks/control-center/etc.yml"
         echo "${BOLD}${GREEN}Host Mappings Configuration Done!${NC}"
-        echo "$(now), .etc.hosts.mappings.conf=done" >> "$STATE_FILE"
+        log_state ".etc.hosts.mappings.conf=done"
         echo -e "${GREEN}\nNext  Configure Users -> ./assist.sh configure users \n${NC}"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
@@ -114,7 +114,7 @@ function configure_mmonit(){
         echo "${GREEN}MMonit Installation & Configuration Done!${NC}"
         run "ansible-vault encrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "MMonit License Encryption Done"
-        echo "$(now), .mmonit.conf=done" >> "$STATE_FILE"
+        log_state ".mmonit.conf=done"
     else
         echo "${BLUE} Skipping mmonit Configuration ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .mmonit.conf=done ${NC}"
@@ -133,7 +133,7 @@ function configure_monit(){
         # Install & Configure Monit
         run "ansible-playbook $PLAYBOOK_HOME/monit.yml"
         echo "${GREEN}Monit Installation & Configuration Done!${NC}"
-        echo "$(now), .monit-agent.conf=done" >> "$STATE_FILE"
+        log_state ".monit-agent.conf=done"
     else
         echo "${BLUE} Skipping monit Configuration ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .monit-agent.conf=done ${NC}"
@@ -154,7 +154,7 @@ function configure_users(){
         run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
         run "source config/generated/post-vm-creation/duo.env && ansible-playbook playbooks/user-mgmt/duo.yml"
         echo "${GREEN}Users Configuration Done!${NC}"
-        echo "$(now), .users.conf=done" >> "$STATE_FILE"
+        log_state ".users.conf=done"
     else
         echo "${BLUE} Skipping users Configuration ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .users.conf=done ${NC}"
@@ -173,7 +173,7 @@ function prepare_vms(){
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
-        echo "$(now), .vms.conf=done" >> "$STATE_FILE"
+        log_state ".vms.conf=done"
         echo -e "${GREEN}\nNext  Configure Control Center -> ./assist.sh configure users \n${NC}"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
