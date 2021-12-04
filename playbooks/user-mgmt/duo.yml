@@ -5,6 +5,7 @@
 
   vars:
       duo_env_path: 'ansible-control-center/config/generated/post-vm-creation/duo.env'
+      state_file: 'ansible-control-center/config/generated/post-vm-creation/vm.state'
       duo_ikey: "{{ lookup('env','duo_ikey') }}"
       duo_skey: "{{ lookup('env','duo_skey') }}"
       duo_api_host: "{{ lookup('env','duo_api_host') }}"
@@ -17,14 +18,14 @@
       ssh_key: "{{ lookup('env','ssh_key') }}"
 
   pre_tasks:
-      - name: Find Playbook Path
-        shell: 'ls ansible-control-center/config/generated/pre-vm-creation/'
-        register: playbook_path_output
+      - name: Display State File
+        shell: 'cat {{ state_file }} '
+        register: state_file_output
 
-      - debug: var=playbook_path_output.stdout
+      - debug: var=state_file_output.stdout
 
       - name: Get env file content
-        shell: 'source {{ duo_env_path }}'
+        shell: '. ./{{ duo_env_path }} && env'
         register: env_file_result
 
       - name: Parse environment
