@@ -11,16 +11,16 @@ function ansible_manager() {
       echo "Prepare All VMs..."
       prepare_vms
       ;;
-  host-mappings)
-    #! is_vm && raise_error "configure can't run from host"
-    echo "Configure Host Mappings in /etc/hosts ..."
-    configure_etc_host_mappings
-    ;;
   users)
     is_vm && raise_error "user configuration can't run on vm"
     echo "Configure Users..."
     configure_users
     echo -e "${GREEN}\nNext  SSH to Control Center -> ./assist.sh login control-center $USER \n${NC}"
+    ;;
+  host-mappings)
+    #! is_vm && raise_error "configure can't run from host"
+    echo "Configure Host Mappings in /etc/hosts ..."
+    configure_etc_host_mappings
     ;;
   k3s)
     ! is_vm && raise_error "k3s can't run on host"
@@ -43,8 +43,8 @@ function ansible_manager() {
 sandbox commands:
 ----------------
   vms                -> Package Upgrade and Install 
-  host-mappings      -> Configure Control Center
   users              -> Configure User with MFA
+  host-mappings      -> Configure Control Center
   monitor            -> Configure Monitoring
   k3s                -> Configure k3s
   status             -> Displays status of the Configuration
