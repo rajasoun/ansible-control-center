@@ -27,6 +27,9 @@
       #   - name: ubuntu
 
   pre_tasks:
+      - name: Include Global vars
+        include_vars: ../vars.yml
+
       - name: Copy vm_state to Host
         tags: vm_state_transfer
         ansible.builtin.copy:
