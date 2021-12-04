@@ -42,11 +42,11 @@ function ansible_manager() {
     cat <<-EOF
 sandbox commands:
 ----------------
-  vms                -> Package Upgrade and Install 
-  users              -> Configure User with MFA
-  host-mappings      -> Configure Control Center
-  monitor            -> Configure Monitoring
-  k3s                -> Configure k3s
+  vms                -> Package Upgrade and Install - Run from Host
+  users              -> Configure User with MFA - Run from Host
+  monitor            -> Configure Monitoring - Run from control-center
+  k3s                -> Configure k3s - Run from control-center
+  host-mappings      -> Configure Control Center 
   status             -> Displays status of the Configuration
 EOF
     ;;
