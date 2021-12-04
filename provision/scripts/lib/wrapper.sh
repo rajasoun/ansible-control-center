@@ -123,6 +123,20 @@ function configure_monit(){
     fi
 }
 
+# Configure User on VMs
+function configure_users(){
+    local DUO_ENV="config/generated/post-vm-creation/duo.env"
+    local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
+    run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
+
+    cp "config/templates/duo.env.sample" "$DUO_ENV"
+    file_replace_text "_CEC_USER_.*$" "$(cat $SSH_PUBLIC_KEY)" "${USER}"
+    file_replace_text "_SSH_KEY_.*$" "$(cat $SSH_PUBLIC_KEY)" "$DUO_ENV"
+    echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/post-vm-creation/duo.env${NC} \n"
+    confirm
+    source "config/generated/post-vm-creation/duo.env"
+}
+
 # Configure Control Center based on state file
 function prepare_control_center(){
     local DUO_ENV="config/generated/post-vm-creation/duo.env"
@@ -135,15 +149,7 @@ function prepare_control_center(){
         echo "${GREEN} Preparing control-center ${NC}"
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
-        run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
-
-        cp "config/templates/duo.env.sample" "$DUO_ENV"
-        file_replace_text "_CEC_USER_.*$" "$(cat $SSH_PUBLIC_KEY)" "${USER}"
-        file_replace_text "_SSH_KEY_.*$" "$(cat $SSH_PUBLIC_KEY)" "$DUO_ENV"
-        echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/post-vm-creation/duo.env${NC} \n"
-        confirm
-        source "config/generated/post-vm-creation/duo.env"
-
+        configure_users
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo ".control-center.prepare.conf=done" >> "$STATE_FILE"
     else
