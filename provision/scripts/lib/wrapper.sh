@@ -55,7 +55,7 @@ function wrapper_runner() {
         --user ansible \
         -v "${PWD}:/ansible" \
         -v "${PWD}/config/generated/pre-vm-creation/id_rsa:/home/ubuntu/.ssh/id_rsa" \
-        -v "${PWD}/config/generated/post-vm-creation/ssh-config:/home/ubuntu/.ssh/ssh-config" \
+        -v "${PWD}/config/generated/post-vm-creation:/home/ubuntu/.ssh" \
         -v "${PWD}/.ansible:/home/ansible/.ansible" \
         rajasoun/wrapper-runner:0.1.0 bash -c "$@"
 
