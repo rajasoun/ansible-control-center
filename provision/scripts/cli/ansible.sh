@@ -42,7 +42,7 @@ sandbox commands:
 ----------------
   prepare            -> Transfer Configuration Files to Control Center
   control-center     -> Configure Control Center
-  control-center     -> Configure User with MFA
+  users              -> Configure User with MFA
   monitor            -> Configure Monitoring
   k3s                -> Configure k3s
   status             -> Displays status of the Configuration
