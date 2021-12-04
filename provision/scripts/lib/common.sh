@@ -12,7 +12,7 @@ function check_for_dot_env_files(){
     confirm 
   fi 
   if [ ! -f $duo_env_file ]; then
-    echo -e "${RED}${BOLD} Add $duo_env_file ${NC}"
+    echo -e " ${BOLD}${BLUE}${UNDERLINE}Edit $duo_env_file ${NC}\n"
     confirm 
   fi 
 }
@@ -30,7 +30,7 @@ function run_prepare(){
     echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
     exit_on_pre_condition_checks
     generate_pre_vm_config_files
-    echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/pre-vm-creation/vms.list${NC} (optional)\n${NC}"
+    echo -e "\n ${BOLD}${BLUE}Edit ${UNDERLINE}config/generated/pre-vm-creation/vms.list${NC} \n${NC}"
 }
 
 
