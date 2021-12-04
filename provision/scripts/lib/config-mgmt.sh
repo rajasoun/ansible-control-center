@@ -9,10 +9,10 @@ function generate_confirm_config_file(){
   if [ ! -f $config_file ]; then
     cp "$template_file" "$config_file"
     echo -e " ${BOLD}${BLUE}Edit ${UNDERLINE}$config_file ${NC}\n"
-    confirm 
+    confirm
   else
     echo -e " ${ORANGE}Reusing Existing $config_file ${NC} Config Files\n"
-  fi 
+  fi
 }
 
 # Add Config File and Wait for Confirmation
@@ -20,10 +20,10 @@ function add_confirm_config_file(){
   local config_file=$1
   if [ ! -f $config_file ]; then
     echo -e " ${BOLD}${BLUE}Add ${UNDERLINE}$config_file ${NC}\n"
-    confirm 
+    confirm
   else
     echo -e " ${ORANGE}Reusing Existing $config_file ${NC} Config Files\n"
-  fi 
+  fi
 }
 
 # Create cloud-init.yaml file from template with SSH public key
@@ -64,7 +64,7 @@ function generate_ssh_config_from_template() {
 function is_configuration_done(){
   config=$1
   local state_file="config/generated/post-vm-creation/vm.state"
-  CONF_STATE=$(cat $state_file | grep -c $config) 
+  CONF_STATE=$(cat $state_file | grep -c $config)
   # If Not Already Configured
   if [ $CONF_STATE -eq "0" ];then
     return 1
@@ -75,12 +75,12 @@ function is_configuration_done(){
 
 # Generate & Check for Configuration Files
 function generate_pre_vm_config_files(){
-  is_configuration_done ".conf.preparation=done" && 
+  is_configuration_done ".conf.preparation=done" &&
     raise_error "Preparation Already Done. Exiting..."
   echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
   exit_on_pre_condition_checks
 
-  # VMs 
+  # VMs
   local vms_list_template_file="config/templates/vms.list"
   local vms_list_config_file="config/generated/pre-vm-creation/vms.list"
   generate_confirm_config_file "$vms_list_template_file" "$vms_list_config_file"
@@ -97,10 +97,10 @@ function generate_pre_vm_config_files(){
   # scripts/lib/ssh.sh
   generate_ssh_key
 
-  # cloud-init.yaml 
+  # cloud-init.yaml
   generate_cloud_init_config_from_template
-  
-  # User Mgmt 
+
+  # User Mgmt
   local duo_template_file="config/templates/duo.env.sample"
   local duo_config_file="config/generated/post-vm-creation/duo.env"
   generate_confirm_config_file "$duo_template_file" "$duo_config_file"
@@ -128,5 +128,5 @@ function clean_generated_config_files(){
       config/generated/post-vm-creation/ssh-config \
       config/generated/post-vm-creation/vm.state \
       config/generated/post-vm-creation/duo.env \
-      config/generated/post-vm-creation/.vault_password 
+      config/generated/post-vm-creation/.vault_password
 }

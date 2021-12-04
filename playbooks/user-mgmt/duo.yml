@@ -14,19 +14,18 @@
       duo_pam_prompts: 3
 
       users_group_add_list:
-        - name: deployer
-          groups: [ "sudo" ]
+          - name: deployer
+            groups: ['sudo']
       users_add_list:
-        - name: "{{ lookup('env','cec_user') }}"
-          unlimited_superuser: true
-          comment: "MFA Enabled CEC User for IaaC Mgmt"
-          ssh_key: "{{ lookup('env','ssh_key') }}"
-          groups: ['deployer']
-          # limited_superuser_commands:
-          #   - /bin/vi
+          - name: "{{ lookup('env','cec_user') }}"
+            unlimited_superuser: true
+            comment: 'MFA Enabled CEC User for IaaC Mgmt'
+            ssh_key: "{{ lookup('env','ssh_key') }}"
+            groups: ['deployer']
+            # limited_superuser_commands:
+            #   - /bin/vi
       # users_delete_list:
       #   - name: ubuntu
-
 
   pre_tasks:
       - name: Copy vm_state to Host

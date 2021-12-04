@@ -93,7 +93,7 @@ function teardown_multipass_setup(){
     local MLIST=$(multipass ls)
     if [[ $MLIST == *"No instances"* ]]; then
       echo "All Clean"
-    else 
+    else
       stop_delete_multipass_vms
     fi
 }

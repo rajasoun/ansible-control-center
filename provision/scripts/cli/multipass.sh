@@ -9,7 +9,7 @@ function multipass_manager() {
   action="$2"
   case $action in
   prepare)
-    generate_pre_vm_config_files 
+    generate_pre_vm_config_files
     echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh local up  \n${NC}"
     ;;
   up)

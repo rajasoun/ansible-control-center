@@ -79,7 +79,7 @@ function check_vms_provision_state(){
     else
         echo -e "${GREEN} VM Provision Check | Successfull | Ref: $state_file  ${NC}"
         return 0
-    fi 
+    fi
 }
 # Configure Control Center based on state file
 function configure_control_center(){
