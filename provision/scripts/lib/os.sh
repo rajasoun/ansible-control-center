@@ -63,7 +63,7 @@ function check_pre_conditions(){
 
 # Raise Error
 function raise_error(){
-  echo "${BOLD}${RED}${1}${NC}" >&2
+  echo -e "${BOLD}${RED}${1}${NC}" >&2
   exit 1
 }
 

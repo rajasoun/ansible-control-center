@@ -144,8 +144,8 @@ function configure_monit(){
 function configure_users(){
     local PLAYBOOK_HOME=$HOME/playbooks
     echo "${GREEN}users - configuration${NC}"
-    ERR_MSG="Control Center Conf State is Empty.Exiting...\n Run -> ./assist.sh configure control-center"
-    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.configure.conf=done) || raise_error "$ERR_MSG"
+    ERR_MSG="Control Center Conf State is Empty.Exiting...\nRun -> ./assist.sh configure vms"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .vms.conf=done) || raise_error "$ERR_MSG"
     CONF_STATE=$(cat $STATE_FILE | grep -c .users.conf=done) || echo "${RED}users Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
