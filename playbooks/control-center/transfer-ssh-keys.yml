@@ -24,7 +24,7 @@
       - name: Copy SSH Config to Host
         tags: ssh_keys
         ansible.builtin.copy:
-            src: '{{ LOCAL_CONFIG }}/post-vm-creation/ssh-config'
+            src: '{{ LOCAL_CONFIG }}/pre-vm-creation/ssh-config'
             dest: '{{ USER_HOME }}/.ssh/config'
             mode: 'u=rw,g=r,o=r'
 
