@@ -4,6 +4,7 @@
   become_method: sudo
 
   vars:
+      USER_HOME: '/home/ubuntu'
       duo_env_path: 'ansible-control-center/config/generated/post-vm-creation/duo.env'
       state_file: 'ansible-control-center/config/generated/post-vm-creation/vm.state'
       duo_ikey: "{{ lookup('env','duo_ikey') }}"
@@ -28,6 +29,11 @@
 
 
   pre_tasks:
+      - name: Copy vm_state to Host
+        tags: vm_state_transfer
+        ansible.builtin.copy:
+            src: '../../config/generated/post-vm-creation/vm.state'
+            dest: '{{ USER_HOME }}/ansible-control-center/config/generated/post-vm-creation/vm.state'
       - name: Display State File
         shell: 'cat {{ state_file }} '
         register: state_file_output
