@@ -24,17 +24,11 @@
 
       - debug: var=state_file_output.stdout
 
-      - name: Get env file content
+      - name: Source env file content
         shell: '. ./{{ duo_env_path }} && env'
         register: env_file_result
 
-      - name: Parse environment
-        set_fact:
-            env_vars: "{{ ('{' + env_file_result.stdout_lines | map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
-
-      - debug: var=env_vars.stdout
-
-      - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
+      - name: Provision Users
         template:
             src: vars/users.j2
             dest: vars/users.yml
