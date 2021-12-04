@@ -62,7 +62,6 @@ function generate_ssh_config_from_template() {
 
 # Generate & Check for Configuration Files
 function generate_pre_vm_config_files(){
-  echo -e "${BOLD}${UNDERLINE}\nChecking for Prerequisites Configuration Files \n${NC}"
   echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
   exit_on_pre_condition_checks
 
@@ -94,6 +93,8 @@ function generate_pre_vm_config_files(){
   local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
   file_replace_text "_CEC_USER_.*$" "${USER}" "${duo_config_file}"
   source "$duo_config_file"
+
+  echo -e "\n - 🍻 ${BOLD}${GREEN}All DONE!${NC}\n"
 }
 
 # Clean Configuration File

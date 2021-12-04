@@ -106,7 +106,7 @@ function reportResults() {
         echoStderr -e "\n💥  Failed tests:" "${FAILED[@]}"
         return 1
     else
-        echo -e "\n💯 - 🍻 ${BOLD}${GREEN}All passed!${NC}\n"
+        echo -e "\n${BOLD}${GREEN}All passed!${NC}\n"
         return 0
     fi
 }
