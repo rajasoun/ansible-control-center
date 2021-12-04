@@ -67,6 +67,20 @@ function wrapper_runner() {
     esac
 }
 
+# check vm provision done
+function check_vms_provision_state(){
+    local state_file="config/generated/post-vm-creation/vm.state"
+    ERR_MSG="\n${RED}VM Conf State is Empty.Exiting... ${NC}"
+    CONF_STATE=$(cat $state_file | grep -c .vms.provision=done) || echo -e "$ERR_MSG"
+    # If Not Already Configured
+    if [ $CONF_STATE -eq "0" ];then
+        echo -e "${BOLD}${BLUE}Run -> ./assist.sh local up ${NC}\n"
+        exit 1
+    else
+        echo -e "${GREEN} VM Provision Check | Successfull | Ref: $state_file  ${NC}"
+        return 0
+    fi 
+}
 # Configure Control Center based on state file
 function configure_control_center(){
     echo "${GREEN}control-center ${NC}"
