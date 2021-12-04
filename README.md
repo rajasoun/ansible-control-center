@@ -34,7 +34,7 @@ locally, or in Openstack
 4. Prepare all VMs and Configure Control Center VM
 
 ```
-./assist.sh configure prepare
+./assist.sh configure vms
 ./assist.sh configure host-mappings
 ```
 
