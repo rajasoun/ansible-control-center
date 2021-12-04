@@ -108,7 +108,6 @@ function configure_mmonit(){
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring MMonit ${NC}"
-        run "ansible-galaxy install -r "
         run "ansible-vault decrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "${GREEN}MMonit License Decrypt Done${NC}"
         run "ansible-playbook $PLAYBOOK_HOME/mmonit.yml"
