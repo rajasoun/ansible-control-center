@@ -23,7 +23,7 @@ function generate_vm_provisioning_scipts(){
       generate_vm_provisioning_command $vm
     fi
   done < $CONFIG_PATH/vms.list
-  echo "${GREEN}Provisioning $CONFIG_PATH/vms.sh Done !${NC}"
+  echo -e "\n${GREEN}Provisioning $CONFIG_PATH/vms.sh Done !${NC}"
 }
 
 # Generate VM Provisioning command from multipass
@@ -36,7 +36,7 @@ function generate_vm_provisioning_command(){
   VM_NAME=$1
   CMD="multipass launch --name $VM_NAME --cpus $CPU --mem $MEMORY --disk $DISK --cloud-init $CLOUD_INIT_FILE"
   if [ "$(multipass list | grep -c $VM_NAME )" -eq "1" ]; then
-    echo "${ORANGE}${BOLD} $VM_NAME Exists. Skipping command Generation...${NC}"
+    echo -e "\n${ORANGE}${BOLD} $VM_NAME Exists. Skipping command Generation...\n${NC}"
   else
     echo "$CMD" >> "$CONFIG_PATH/vms.sh"
   fi
@@ -56,7 +56,7 @@ function generate_inventory_file(){
       echo "$INVENTORY $GROUP_VARS" >> $INVENTORY_PATH
     fi
   done < $CONFIG_PATH/vms.list
-  echo "${BOLD}${GREEN}Inventory $INVENTORY_PATH Gnereration Done !${NC}"
+  echo -e "\n${GREEN}Inventory $INVENTORY_PATH Generation Done !\n${NC}"
 }
 
 # Generate POST VM Config script for  multipass
