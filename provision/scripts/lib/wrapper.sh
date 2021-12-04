@@ -123,6 +123,25 @@ function configure_monit(){
     fi
 }
 
+# Configure Monit
+function configure_users(){
+    local PLAYBOOK_HOME=$HOME/playbooks
+    echo "${GREEN}users - configuration${NC}"
+    ERR_MSG="Control Center Conf State is Empty.Exiting...\n Run -> ./assist.sh configure control-center"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.configure.conf=done) || raise_error "$ERR_MSG"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .users.conf=done) || echo "${RED}users Conf State is Empty${NC}"
+    # If Not Already Configured
+    if [ $CONF_STATE -eq "0" ];then
+        echo "${GREEN} Configuring Users ${NC}"
+        # Configure Users
+        run "ansible-playbook $PLAYBOOK_HOME/duo.yml"
+        echo "${GREEN}Users Configuration Done!${NC}"
+        echo ".users.conf=done" >> "$STATE_FILE"
+    else
+        echo "${BLUE} Skipping users Configuration ${NC}"
+    fi
+}
+
 # Configure User on VMs
 function configure_for_user_mgmt(){
     local DUO_ENV="config/generated/post-vm-creation/duo.env"

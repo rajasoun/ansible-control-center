@@ -18,6 +18,10 @@ function ansible_manager() {
     echo "Configure Control Center..."
     configure_control_center
     ;;
+  users)
+    echo "Configure Users..."
+    configure_users
+    ;;
   k3s)
     ! is_vm && raise_error "k3s can't run on host"
     run "ansible-playbook playbooks/k3s/prereq.yml"
