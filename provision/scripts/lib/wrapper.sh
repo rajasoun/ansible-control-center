@@ -88,7 +88,6 @@ function configure_control_center(){
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring control-center ${NC}"
-        run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
         run "ansible-playbook playbooks/control-center/etc.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
         echo "$(date), .control-center.configure.conf=done" >> "$STATE_FILE"
