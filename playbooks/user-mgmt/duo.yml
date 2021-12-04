@@ -13,7 +13,7 @@
       duo_pam_prompts: 3
       add_user_groups_list:
           - name: deployer
-      users_add_list:
+      add_users_list:
           - name: "{{ lookup('env','cec_user') }}"
       ssh_key: "{{ lookup('env','ssh_key') }}"
 

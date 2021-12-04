@@ -5,7 +5,7 @@
         groups: [ "sudo" ]
 {% endfor -%}
 
-    users_add_list:
+    add_users_list:
 {% for user in add_users_list -%}
       - name: {{ user.name }}
         unlimited_superuser: true
