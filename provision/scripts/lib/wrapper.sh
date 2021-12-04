@@ -92,6 +92,7 @@ function configure_control_center(){
         run "ansible-playbook playbooks/control-center/etc.yml"
         echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
         echo "$(date), .control-center.configure.conf=done" >> "$STATE_FILE"
+        echo -e "${GREEN}\nNext  Configure Users -> ./assist.sh configure users \n${NC}"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .control-center.configure.conf=done ${NC}"
@@ -174,6 +175,7 @@ function prepare_control_center(){
         run "ansible-playbook playbooks/control-center/prepare.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo "$(date), .control-center.prepare.conf=done" >> "$STATE_FILE"
+        echo -e "${GREEN}\nNext  Configure Control Center -> ./assist.sh configure control-center \n${NC}"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
         echo "${ORANGE} Edit $STATE_FILE to remove .control-center.prepare.conf=done ${NC}"
