@@ -10,7 +10,6 @@ function ansible_manager() {
       check_vms_provision_state
       echo "Prepare Control Center from Local Host..."
       prepare_control_center
-      echo "Control Center is Preparation Done!"
       ;;
   control-center)
     #! is_vm && raise_error "configure can't run from host"

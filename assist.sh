@@ -9,12 +9,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/provision/scripts/load.sh"
 
 function help(){
-    echo "Usage: $0  {local | ansible}" >&2
+    echo "Usage: $0  {local | openstack }" >&2
     echo
     echo "   local      -> Manage multipass Sandbox Environment via Multipass "
     echo "   configure  -> Ansible Based Configuration "
     echo "   wrapper    -> Wrapper for ansible,openstack and aws "
-    echo "   login      -> Login to VM"
+    echo "   login      -> Login to VM <vm_name> <user>"
     echo
     return 1
 }

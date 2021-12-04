@@ -31,15 +31,21 @@ locally, or in Openstack
 ./assist.sh local up
 ```
 
-4. Configure VMs
+4. Prepare all VMs and Configure Control Center VM
 
 ```
-./assist.sh ansible prepare
-./assist.sh local   enter
-./assist.sh ansible configure
+./assist.sh configure prepare
+./assist.sh configure control-center
 ```
 
-4. Install Dcoker and Docker-Compose in observability, dashboard and reverse-proxy
+5. Manager User & Configure MFA in Control Center VM
+
+```
+./assist.sh configure users
+./assist.sh login control-center rajasoun
+```
+
+6. Install Dcoker and Docker-Compose in observability, dashboard and reverse-proxy
 
 ```
 ansible-playbook playbooks/observability.yml
