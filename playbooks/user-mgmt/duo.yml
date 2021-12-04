@@ -12,19 +12,19 @@
       duo_pam_groups: ['deployer', 'sudo']
       duo_pam_prompts: 3
 
-      # users_group_add_list:
-      #   - name: deployer
-      #     groups: [ "sudo" ]
+      users_group_add_list:
+        - name: deployer
+          groups: [ "sudo" ]
       users_add_list:
         - name: "{{ lookup('env','cec_user') }}"
           unlimited_superuser: true
           comment: "MFA Enabled CEC User for IaaC Mgmt"
           ssh_key: "{{ lookup('env','ssh_key') }}"
-          groups: ['sudo','deployer']
+          groups: ['deployer']
           # limited_superuser_commands:
           #   - /bin/vi
       # users_delete_list:
-      #   -name: ubuntu
+      #   - name: ubuntu
 
 
   pre_tasks:
