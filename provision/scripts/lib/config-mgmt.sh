@@ -75,8 +75,11 @@ function is_configuration_done(){
 
 # Generate & Check for Configuration Files
 function generate_pre_vm_config_files(){
-  is_configuration_done ".conf.preparation=done" &&
-    raise_error "Preparation Already Done. Exiting..."
+  local state_file="config/generated/post-vm-creation/vm.state"
+  if [ -f $state_file ];then
+    is_configuration_done ".conf.preparation=done" &&
+      raise_error "Preparation Already Done. Exiting..."
+  fi 
   echo -e "\n${BOLD}${UNDERLINE}🧪 Prerequisites Checks...${NC}\n"
   exit_on_pre_condition_checks
 
