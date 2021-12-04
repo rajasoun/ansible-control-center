@@ -110,5 +110,6 @@ function clean_generated_config_files(){
       config/generated/post-vm-creation/inventory \
       config/generated/post-vm-creation/ssh-config \
       config/generated/post-vm-creation/vm.state \
-      config/generated/post-vm-creation/duo.env 
+      config/generated/post-vm-creation/duo.env \
+      config/generated/post-vm-creation/.vault_password 
 }
