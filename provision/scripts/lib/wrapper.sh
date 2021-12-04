@@ -166,17 +166,17 @@ function prepare_vms(){
     local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
 
     echo "${GREEN}control-center ${NC}"
-    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.prepare.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .vms.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Preparing control-center ${NC}"
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
-        echo "$(date), .control-center.prepare.conf=done" >> "$STATE_FILE"
+        echo "$(date), .vms.conf=done" >> "$STATE_FILE"
         echo -e "${GREEN}\nNext  Configure Control Center -> ./assist.sh configure control-center \n${NC}"
     else
         echo "${BLUE} Skipping control-center Preparation ${NC}"
-        echo "${ORANGE} Edit $STATE_FILE to remove .control-center.prepare.conf=done ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .vms.conf=done ${NC}"
     fi
 }
