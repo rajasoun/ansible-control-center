@@ -9,5 +9,5 @@
 {% for user in add_users_list -%}
       - name: {{ user.name }}
         unlimited_superuser: true
-        ssh_key: {{ user.ssh_public_key }}
+        ssh_key: {{ ssh_key }}
 {% endfor -%}
