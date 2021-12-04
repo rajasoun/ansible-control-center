@@ -82,19 +82,19 @@ function check_vms_provision_state(){
     fi
 }
 # Configure Control Center based on state file
-function configure_control_center(){
-    echo "${GREEN}control-center ${NC}"
-    CONF_STATE=$(cat $STATE_FILE | grep -c .control-center.configure.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
+function configure_etc_host_mappings(){
+    echo "${GREEN}Configure ETC Host Mapping ${NC}"
+    CONF_STATE=$(cat $STATE_FILE | grep -c .etc.hosts.mappings.conf=done) || echo "${RED}control-center Conf State is Empty${NC}"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
-        echo "${GREEN} Configuring control-center ${NC}"
+        echo "${GREEN} Configuring Host Mappings in /etc/hosts ${NC}"
         run "ansible-playbook playbooks/control-center/etc.yml"
-        echo "${BOLD}${GREEN}Control Center Configuration Done!${NC}"
-        echo "$(date), .control-center.configure.conf=done" >> "$STATE_FILE"
+        echo "${BOLD}${GREEN}Host Mappings Configuration Done!${NC}"
+        echo "$(date), .etc.hosts.mappings.conf=done" >> "$STATE_FILE"
         echo -e "${GREEN}\nNext  Configure Users -> ./assist.sh configure users \n${NC}"
     else
         echo "${BLUE} Skipping control-center Configuration ${NC}"
-        echo "${ORANGE} Edit $STATE_FILE to remove .control-center.configure.conf=done ${NC}"
+        echo "${ORANGE} Edit $STATE_FILE to remove .etc.hosts.mappings.conf=done ${NC}"
     fi
 }
 
@@ -162,7 +162,7 @@ function configure_users(){
 }
 
 # Configure Control Center based on state file
-function prepare_control_center(){
+function prepare_vms(){
     local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
 
     echo "${GREEN}control-center ${NC}"

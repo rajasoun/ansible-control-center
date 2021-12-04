@@ -8,13 +8,13 @@ function ansible_manager() {
   prepare)
       is_vm && raise_error "prepare can't run from VM"
       check_vms_provision_state
-      echo "Prepare Control Center from Local Host..."
-      prepare_control_center
+      echo "Prepare All VMs..."
+      prepare_vms
       ;;
-  control-center)
+  host-mappings)
     #! is_vm && raise_error "configure can't run from host"
-    echo "Configure Control Center..."
-    configure_control_center
+    echo "Configure Host Mappings in /etc/hosts ..."
+    configure_etc_host_mappings
     ;;
   users)
     #is_vm && raise_error "user configuration can't run on vm"
@@ -43,7 +43,7 @@ function ansible_manager() {
 sandbox commands:
 ----------------
   prepare            -> Transfer Configuration Files to Control Center
-  control-center     -> Configure Control Center
+  host-mappings      -> Configure Control Center
   users              -> Configure User with MFA
   monitor            -> Configure Monitoring
   k3s                -> Configure k3s
