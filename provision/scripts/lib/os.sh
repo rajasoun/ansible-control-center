@@ -181,3 +181,9 @@ function is_connected_to_vpn(){
 function pretty_table_print {
     column -t -s,  "$@" | less -F -S -X -K
 }
+
+# Current Time 
+function now {
+  NOW=$(now)
+  echo ${NOW}
+}
