@@ -4,7 +4,6 @@
   become_method: sudo
 
   vars:
-      USER_HOME: '/home/ubuntu'
       duo_env_path: 'ansible-control-center/config/generated/post-vm-creation/duo.env'
       state_file: 'ansible-control-center/config/generated/post-vm-creation/vm.state'
       duo_ikey: "{{ lookup('env','duo_ikey') }}"
