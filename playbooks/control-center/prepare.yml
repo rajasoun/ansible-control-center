@@ -5,3 +5,4 @@
 - import_playbook: transfer-ssh-keys.yml
 - import_playbook: trasfer-ssl-certs.yml
 - import_playbook: transfer-duo-env.yml
+- import_playbook: transfer-vm-state.yml
