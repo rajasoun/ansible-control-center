@@ -109,21 +109,20 @@ function ssh-login() {
         echo -e "${RED}${BOLD}Parameters Not Prement: VM -> $vm | user -> $user ${NC}"
         echo -e "${GREEN} Switching to Interactive Mode ${NC}"
         ansible-ssh "$@"
-    fi
+    else 
+        ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
+        ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
+        ip="$(ansible-inventory --host $vm | jq -cr '"\(.ansible_ssh_host)"')"
+        sshLoginHost="$user@$ip"
 
-    ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
-    ssh_private_key="-i config/generated/pre-vm-creation/id_rsa"
-
-    ip="$(ansible-inventory --host $vm | jq -cr '"\(.ansible_ssh_host)"')"
-    sshLoginHost="$user@$ip"
-
-    if [ ["$sshLoginHost" = ""] ]; then
-        # ex) Ctrl-C.
-        echo "${RED}$vm Not Availablee in the Inventory${NC}"
-        return 1
-    fi
-    ping_check $vm
-    echo "${GREEN} ssh $user@$ip ${NC}"
-    confirm
-    bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
+        if [ ["$sshLoginHost" = ""] ]; then
+            # ex) Ctrl-C.
+            echo "${RED}$vm Not Availablee in the Inventory${NC}"
+            return 1
+        fi
+        ping_check $vm
+        echo "${GREEN} ssh $user@$ip ${NC}"
+        confirm
+        bash -c "ssh ${ssh_args} ${sshLoginHost} ${ssh_private_key}"
+    fi    
 }
