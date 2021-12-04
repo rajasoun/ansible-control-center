@@ -4,8 +4,9 @@
   become_method: sudo
 
   vars:
-      duo_env_path: 'ansible-control-center/config/generated/post-vm-creation/duo.env'
-      state_file: 'ansible-control-center/config/generated/post-vm-creation/vm.state'
+      config_base_path: 'ansible-control-center/config/generated/post-vm-creation'
+      duo_env_path: '{{ config_base_path }}/duo.env'
+      state_file: '{{ config_base_path }}/vm.state'
       duo_ikey: "{{ lookup('env','duo_ikey') }}"
       duo_skey: "{{ lookup('env','duo_skey') }}"
       duo_api_host: "{{ lookup('env','duo_api_host') }}"
