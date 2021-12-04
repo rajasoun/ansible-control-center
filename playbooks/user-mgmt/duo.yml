@@ -31,7 +31,7 @@
       - name: Provision Users
         template:
             src: vars/users.j2
-            dest: users.yml
+            dest: 'ansible-control-center/config/generated/post-vm-creation/users.yml'
             owner: root
             group: root
             mode: 0644
