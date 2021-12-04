@@ -74,7 +74,7 @@ function check_vms_provision_state(){
     CONF_STATE=$(cat $state_file | grep -c .vms.provision=done) || echo -e "$ERR_MSG"
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
-        echo -e "${BOLD}${BLUE}Run -> ./assist.sh local up ${NC}\n"
+        echo -e "${BOLD}${BLUE}Run From Host -> ./assist.sh local up ${NC}\n"
         exit 1
     else
         echo -e "${GREEN} VM Provision Check | Successfull | Ref: $state_file  ${NC}"

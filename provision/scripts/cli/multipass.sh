@@ -13,6 +13,7 @@ function multipass_manager() {
     echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh local up  \n${NC}"
     ;;
   up)
+    is_vm && raise_error "up can't run from VM."
     if [ ! -f config/generated/pre-vm-creation/vms.list ]; then
       generate_pre_vm_config_files
     fi

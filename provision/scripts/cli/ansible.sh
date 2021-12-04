@@ -6,7 +6,7 @@ function ansible_manager() {
   action="$2"
   case $action in
   vms)
-      is_vm && raise_error "prepare can't run from VM"
+      # is_vm && raise_error "prepare can't run from VM"
       check_vms_provision_state
       echo "Prepare All VMs..."
       prepare_vms
