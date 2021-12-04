@@ -23,11 +23,11 @@ function multipass_manager() {
     generate_vm_provisioning_scipts
     provision_vms_from_script
     generate_post_vm_config_files
-    multipass mount ${PWD}/.ansible control-center:ansible-control-center/.ansible
+    mount_dot_ansible_to_control_center
     end=$(date +%s)
     runtime=$((end-start))
     echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
-    echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh configure prepare  \n${NC}"
+    echo -e "${GREEN}\nNext Run From ${UNDERLINE}Host${NC} ->  ./assist.sh configure vms \n${NC}"
     ;;
   down)
     echo "Stopping multipass sandbox containers..."

@@ -42,6 +42,15 @@ function generate_vm_provisioning_command(){
   fi
 }
 
+function mount_dot_ansible_to_control_center(){
+  if [ $(multipass info control-center | grep Mounts | wc -l) -eq "0" ]; then
+    multipass mount ${PWD}/.ansible control-center:ansible-control-center/.ansible
+    echo ".ansible Folder to control-center mounting Done!\n"
+  else 
+    echo ".ansible Folder Alreday mounted on control-center. Skipping...\n"
+  fi
+}
+
 # Generate Inventory File from local multipass setup
 function generate_inventory_file(){
   local CONFIG_PATH="config/generated/pre-vm-creation"
