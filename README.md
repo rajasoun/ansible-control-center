@@ -35,7 +35,7 @@ locally, or in Openstack
 
 ```
 ./assist.sh configure prepare
-./assist.sh configure control-center
+./assist.sh configure host-mappings
 ```
 
 5. Manager User & Configure MFA in Control Center VM
