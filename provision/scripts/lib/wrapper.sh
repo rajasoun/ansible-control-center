@@ -124,7 +124,7 @@ function configure_monit(){
 }
 
 # Configure User on VMs
-function configure_users(){
+function configure_for_user_mgmt(){
     local DUO_ENV="config/generated/post-vm-creation/duo.env"
     local SSH_PUBLIC_KEY="config/generated/pre-vm-creation/id_rsa.pub"
     run "ansible-galaxy install -r playbooks/dependencies/user-mgmt/requirements.yml"
@@ -149,7 +149,7 @@ function prepare_control_center(){
         echo "${GREEN} Preparing control-center ${NC}"
         run "ansible-playbook playbooks/apt-packages.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
-        configure_users
+        configure_for_user_mgmt
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         echo ".control-center.prepare.conf=done" >> "$STATE_FILE"
     else
