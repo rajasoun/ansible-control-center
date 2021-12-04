@@ -31,11 +31,11 @@
       - name: Provision Users
         template:
             src: vars/users.j2
-            dest: vars/users.yml
+            dest: users.yml
             owner: root
             group: root
             mode: 0644
 
-  roles:
-      - role: ansible-users
-      - role: ansible-duo_install
+  # roles:
+  #     - role: ansible-users
+  #     - role: ansible-duo_install
