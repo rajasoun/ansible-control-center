@@ -23,7 +23,7 @@ function multipass_manager() {
     generate_vm_provisioning_scipts
     provision_vms_from_script
     generate_post_vm_config_files
-    mount_dot_ansible_to_control_center
+    #mount_dot_ansible_to_control_center
     end=$(date +%s)
     runtime=$((end-start))
     echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
