@@ -130,7 +130,7 @@ function configure_monit(){
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring Monit ${NC}"
         # Install & Configure Monit
-        run "ansible-playbook $PLAYBOOK_HOME/mmonit/monit.yml"
+        run "ansible-playbook $PLAYBOOK_HOME/monitoring/monit.yml"
         echo "${GREEN}Monit Installation & Configuration Done!${NC}"
         log_state ".monit-agent.conf=done"
     else
