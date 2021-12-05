@@ -45,21 +45,21 @@ function multipass_manager() {
     display_apps_status "config/generated/pre-vm-creation/apps.list"
     ;;
     e2e)
-        generate_pre_vm_config_files
-        generate_vm_provisioning_scipts
-        provision_vms_from_script
-        generate_post_vm_config_files
+      generate_pre_vm_config_files
+      generate_vm_provisioning_scipts
+      provision_vms_from_script
+      generate_post_vm_config_files
 
-        check_vms_provision_state
-        prepare_vms
-        configure_users
-        configure_etc_host_mappings
+      check_vms_provision_state
+      prepare_vms
+      configure_users
+      configure_etc_host_mappings
 
-        multipass exec control-center -- cd ansible-control-center && ./assist.sh configure monitor
+      multipass exec control-center -- cd ansible-control-center && ./assist.sh configure monitor
 
-        display_apps_status "config/generated/pre-vm-creation/apps.list"
-        teardown_multipass_setup
-        clean_generated_config_files
+      display_apps_status "config/generated/pre-vm-creation/apps.list"
+      teardown_multipass_setup
+      clean_generated_config_files
     ;;
   *)
     cat <<-EOF
