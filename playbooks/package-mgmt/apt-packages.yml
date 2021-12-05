@@ -47,4 +47,3 @@
         community.general.snap:
             name: kubectl
             classic: yes
-

@@ -47,7 +47,7 @@ sandbox commands:
   users              -> Configure User with MFA - Run from Host
   monitor            -> Configure Monitoring - Run from control-center
   k3s                -> Configure k3s - Run from control-center
-  host-mappings      -> Configure Control Center 
+  host-mappings      -> Configure Control Center
   status             -> Displays status of the Configuration
 EOF
     ;;

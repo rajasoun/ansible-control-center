@@ -182,7 +182,7 @@ function pretty_table_print {
     column -t -s,  "$@" | less -F -S -X -K
 }
 
-# Log State of the Step 
+# Log State of the Step
 function log_state(){
   local state_file="config/generated/post-vm-creation/vm.state"
   config_item=$1
@@ -191,7 +191,7 @@ function log_state(){
   #run "ansible-playbook playbooks/control-center/transfer-vm-state.yml"
 }
 
-# Set Env from from 
+# Set Env from from
 function set_env_from_file(){
   file=$1
   eval $(cat $1 | sed 's/^/export /')
