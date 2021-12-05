@@ -182,10 +182,29 @@ function pretty_table_print {
     column -t -s,  "$@" | less -F -S -X -K
 }
 
+# Log State of the Step 
 function log_state(){
   local state_file="config/generated/post-vm-creation/vm.state"
   config_item=$1
   timestamp=$(date +"%m-%d-%Y %r")
   is_configuration_done "$config_item" || echo "$timestamp, $config_item" >> "$state_file"
   #run "ansible-playbook playbooks/control-center/transfer-vm-state.yml"
+}
+
+# Set Env from from 
+function set_env_from_file(){
+  file=$1
+  eval $(cat $1 | sed 's/^/export /')
+}
+
+# Retrive Secrets from AWS
+function secrets_to_env(){
+  AWS_SECRET_ID=$1
+  if [ -n "$AWS_SECRET_ID" ]
+  then
+      aws secretsmanager get-secret-value --secret-id ${AWS_SECRET_ID} --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > /tmp/secrets.env
+      #eval $(cat /tmp/secrets.env | sed 's/^/export /')
+      set_env_from_file "/tmp/secrets.env"
+      rm -f /tmp/secrets.env
+  fi
 }
