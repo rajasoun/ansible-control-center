@@ -118,6 +118,12 @@ function generate_pre_vm_config_files(){
   echo -e "\n - 🍻 ${BOLD}${GREEN}All DONE!${NC}\n"
 }
 
+# Configure Monitoring
+function configure_monitoring(){
+    configure_mmonit
+    configure_monit
+}
+
 # Clean Configuration File
 function clean_generated_config_files(){
     rm -fr \
