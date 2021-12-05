@@ -100,18 +100,15 @@ function configure_etc_host_mappings(){
 # Configure MMonit
 function configure_mmonit(){
     local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks
-    local VAULT_PASSWORD
-    local MMONIT_LICENSE
+    
     case "$(hostname)" in
-        control-center-wrapper)
-            VAULT_PASSWORD="config/generated/post-vm-creation/.vault_password"
-            MMONIT_LICENSE="/home/ansible/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"  
-            ;;
         control-center)
-            echo "$(hostname)"
-            VAULT_PASSWORD="$HOME/ansible-managed/.vault_password" 
-            MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
-            ;;
+            local VAULT_PASSWORD="$HOME/ansible-managed/.vault_password" 
+            local MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
+        ;;
+        *)
+        raise_error "Confguring Monitoring Stack Need to Run in control-center VM"
+        ;;
     esac
 
     echo "${GREEN}mmonit - configuration${NC}"
