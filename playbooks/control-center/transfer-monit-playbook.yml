@@ -9,5 +9,5 @@
       - name: Copy Generated monit playbbok to Host
         tags: monit_playbbok
         ansible.builtin.copy:
-            src: '../monit.yml'
+            src: '../monitoring/monit.yml'
             dest: '{{ USER_HOME }}/ansible-control-center/playbooks'
