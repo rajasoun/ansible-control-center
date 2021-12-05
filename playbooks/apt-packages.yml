@@ -32,6 +32,7 @@
             ansible_python_interpreter: '{{ ansible_facts.python.executable }}'
         when: ansible_python_interpreter is not defined
 
+  include_tasks: pip-packages.yml
   tasks:
       - name: Install APT Packages
         apt:
