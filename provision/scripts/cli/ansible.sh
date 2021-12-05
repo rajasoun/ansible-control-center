@@ -29,7 +29,7 @@ function ansible_manager() {
     run "ansible-playbook playbooks/k3s/post-setup.yml"
     ;;
   monitor)
-    ! is_vm && raise_error "k3s can't run on host"
+    #! is_vm && raise_error "k3s can't run on host"
     run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
     configure_mmonit
     configure_monit
