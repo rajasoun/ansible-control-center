@@ -31,7 +31,7 @@ function ansible_manager() {
   monitor)
     #! is_vm && raise_error "k3s can't run on host"
     run "ansible-galaxy install -r playbooks/dependencies/monitoring/requirements.yml"
-
+    configure_monitoring
     ;;
   status)
     local state_file="config/generated/post-vm-creation/vm.state"
