@@ -109,7 +109,7 @@ function configure_mmonit(){
         echo "${GREEN} Configuring MMonit ${NC}"
         run "ansible-vault decrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "${GREEN}MMonit License Decrypt Done${NC}"
-        run "ansible-playbook $PLAYBOOK_HOME/mmonit.yml"
+        run "ansible-playbook $PLAYBOOK_HOME/mmonit/mmonit.yml"
         echo "${GREEN}MMonit Installation & Configuration Done!${NC}"
         run "ansible-vault encrypt $MMONIT_LICENSE --vault-password-file $HOME/ansible-managed/.vault_password"
         echo "MMonit License Encryption Done"
@@ -130,7 +130,7 @@ function configure_monit(){
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Configuring Monit ${NC}"
         # Install & Configure Monit
-        run "ansible-playbook $PLAYBOOK_HOME/monit.yml"
+        run "ansible-playbook $PLAYBOOK_HOME/mmonit/monit.yml"
         echo "${GREEN}Monit Installation & Configuration Done!${NC}"
         log_state ".monit-agent.conf=done"
     else
