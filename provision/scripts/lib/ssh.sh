@@ -105,9 +105,11 @@ function ssh-login() {
         echo "${RED}${BOLD}Inventory File Not Availabe. Exiting...${NC}"
         exit 1
     fi
-    if [[ " -z $vm " ||  "-z $user"  ]];then
+    if [[  -z "$vm" ||  -z "$user"  ]];then
         echo -e "${RED}${BOLD}Parameters Not Prement: VM -> $vm | user -> $user ${NC}"
         echo -e "${GREEN} Switching to Interactive Mode ${NC}"
+        local err_msg="For Interactive Mode - fzf is Needed.\n ${ORANGE}./assist.sh login <vm_name> <user>${NC}"
+        check "fzf" fzf --version || raise_error  $err_msg
         ansible-ssh "$@"
     else
         ssh_args="-o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes"
