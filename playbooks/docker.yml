@@ -1,5 +1,5 @@
 ---
-- hosts: all,!localhost
+- hosts: vms
   become: true
   become_method: sudo
 
