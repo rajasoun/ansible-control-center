@@ -48,6 +48,3 @@
             name: kubectl
             classic: yes
 
-      - name: Install Pip Packages (awscli and openstack)
-        include_tasks:
-          file: pip-packages.yml
