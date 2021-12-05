@@ -170,7 +170,7 @@ function prepare_vms(){
     # If Not Already Configured
     if [ $CONF_STATE -eq "0" ];then
         echo "${GREEN} Preparing control-center ${NC}"
-        run "ansible-playbook playbooks/apt-packages.yml"
+        run "ansible-playbook playbooks/package-mgmt/main.yml"
         run "ansible-playbook playbooks/control-center/prepare.yml"
         echo "${BOLD}${GREEN}Control Center Preparation Done!${NC}"
         log_state ".vms.conf=done"
