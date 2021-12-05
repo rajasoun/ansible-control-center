@@ -101,7 +101,8 @@ function configure_etc_host_mappings(){
 function configure_mmonit(){
     local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks
     local MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
-
+    local VAULT_PASSWORD
+    is_vm && VAULT_PASSWORD="$HOME/ansible-managed/.vault_password" || VAULT_PASSWORD="config/generated/post-vm-creation/.vault_password"
     echo "${GREEN}mmonit - configuration${NC}"
     CONF_STATE=$(cat $STATE_FILE | grep -c .mmonit.conf=done) || echo "${RED}mmonit Conf State is Empty${NC}"
     # If Not Already Configured
