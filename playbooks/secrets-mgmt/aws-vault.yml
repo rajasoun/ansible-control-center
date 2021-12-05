@@ -1,5 +1,7 @@
 ---
 - hosts: control-center
+  become: true
+  become_method: sudo
 
   vars:
     awsvault_app: aws-vault
