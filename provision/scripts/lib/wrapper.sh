@@ -49,8 +49,8 @@ function wrapper_runner() {
 
     echo "Running in Wrapper Container"
     _docker run --rm "${IT[@]}"  \
-        --hostname control-center \
-        --name control-center \
+        --hostname control-center-wrapper \
+        --name control-center-wrapper \
         --workdir /ansible \
         --user ansible \
         -v "${PWD}:/ansible" \
@@ -102,13 +102,18 @@ function configure_mmonit(){
     local PLAYBOOK_HOME=$HOME/ansible-control-center/playbooks
     local VAULT_PASSWORD
     local MMONIT_LICENSE
-    if [ is_vm ]; then
-        VAULT_PASSWORD="$HOME/ansible-managed/.vault_password" 
-        MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
-    else
-        VAULT_PASSWORD="config/generated/post-vm-creation/.vault_password"
-        MMONIT_LICENSE="$PWD/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
-    fi 
+    case "$(hostname)" in
+        control-center-wrapper)
+            VAULT_PASSWORD="config/generated/post-vm-creation/.vault_password"
+            MMONIT_LICENSE="/home/ansible/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"  
+            ;;
+        control-center)
+            echo "$(hostname)"
+            VAULT_PASSWORD="$HOME/ansible-managed/.vault_password" 
+            MMONIT_LICENSE="$HOME/.ansible/roles/rajasoun.ansible_role_mmonit/files/license.yml"
+            ;;
+    esac
+
     echo "${GREEN}mmonit - configuration${NC}"
     CONF_STATE=$(cat $STATE_FILE | grep -c .mmonit.conf=done) || echo "${RED}mmonit Conf State is Empty${NC}"
     # If Not Already Configured
