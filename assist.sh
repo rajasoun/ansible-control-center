@@ -19,18 +19,6 @@ function help(){
     return 1
 }
 
-function ci(){
-    if [[ -t 0 ]]; then IT+=(-i); fi
-    if [[ -t 1 ]]; then IT+=(-t); fi
-    _docker run --rm "${IT[@]}" \   
-        --name ci-shell \
-        --hostname ci-shell 
-        -v "$(pwd):$(pwd)" \
-        -v /var/run/docker.sock:/var/run/docker.sock  \
-        -w "$(pwd)"  \
-        rajasoun/ci-shell:latest
-}
-
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
