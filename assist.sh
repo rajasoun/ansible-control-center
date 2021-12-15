@@ -19,9 +19,22 @@ function help(){
     return 1
 }
 
+function ci(){
+    if [[ -t 0 ]]; then IT+=(-i); fi
+    if [[ -t 1 ]]; then IT+=(-t); fi
+    _docker run --rm "${IT[@]}" \   
+        --name ci-shell \
+        --hostname ci-shell 
+        -v "$(pwd):$(pwd)" \
+        -v /var/run/docker.sock:/var/run/docker.sock  \
+        -w "$(pwd)"  \
+        rajasoun/ci-shell:latest
+}
+
 opt="$1"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
+    ci) ci ;;
     local)
         is_vm && raise_error "local can't be run on VM"
         is_connected_to_vpn  && raise_error "Disconnect From VPN.Exiting..."
