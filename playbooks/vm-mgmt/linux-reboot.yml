@@ -1,6 +1,6 @@
 ---
 - name: Linux Reboot
-  hosts: control-center
+  hosts: vms
   gather_facts: no
   become: true
   become_method: sudo
@@ -8,6 +8,6 @@
   tasks:
       - name: Reboot the machine (Wait for 5 min)
         reboot:
-            reboot_command: launchctl reboot userspace
+            reboot_command: reboot userspace
             boot_time_command: uptime | cut -d ' ' -f 5
             reboot_timeout: 300
