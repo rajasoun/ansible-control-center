@@ -78,6 +78,8 @@ function check_vms_provision_state(){
         exit 1
     else
         echo -e "${GREEN} VM Provision Check | Successfull | Ref: $state_file  ${NC}"
+        ERR_MSG="\nZero VMs Running.Exiting... \n${BOLD}${BLUE}Run From Host -> ./assist.sh local up ${NC}\n"
+        [ $(multipass list | grep -c "No instances found.") = '1' ] && raise_error "$ERR_MSG"
         return 0
     fi
 }
