@@ -39,6 +39,7 @@ function multipass_manager() {
     echo "Querying multipass sandbox status..."
     multipass list
     echo ""
+    [ $(multipass list | grep -c "No instances found.") = '1' ] && raise_error "Zero VMs Running\n"
     echo "Querying VMs status (ansible ping via Playbook)..."
     run "ansible-playbook playbooks/ping.yml"
     echo ""
