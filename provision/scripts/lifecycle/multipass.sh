@@ -32,9 +32,10 @@ function generate_vm_provisioning_command(){
   local MEMORY=${MEMORY:-"2G"}
   local DISK=${DISK:-"4G"}
   local CLOUD_INIT_FILE="$CONFIG_PATH/cloud-init.yaml"
+  local IMAGE=${IMAGE:-"21.10"}
 
   VM_NAME=$1
-  CMD="multipass launch --name $VM_NAME --cpus $CPU --mem $MEMORY --disk $DISK --cloud-init $CLOUD_INIT_FILE"
+  CMD="multipass launch --name $VM_NAME --cpus $CPU --mem $MEMORY --disk $DISK --cloud-init $CLOUD_INIT_FILE $IMAGE"
   if [ "$(multipass list | grep -c $VM_NAME )" -eq "1" ]; then
     echo -e "\n${ORANGE}${BOLD} $VM_NAME Exists. Skipping command Generation...\n${NC}"
   else
